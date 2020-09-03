@@ -31,22 +31,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="collapse navbar-collapse order-3" id="navbarCollapse">
           <!-- Left navbar links -->
           <ul class="navbar-nav">
-            <!-- <li class="nav-item active">
-              <a href="#" class="nav-link">Carreras</a>
-            </li>
-            <li class="nav-item active">
-              <a href="#" class="nav-link">Aulas</a>
-            </li> -->
             <li class="nav-item dropdown active">
               <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Administrar</a>
               <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                 <li><a href="{{ route('roles.index') }}" class="dropdown-item">Roles</a></li>
-                <li><a href="#" class="dropdown-item">Carreras </a></li>
-                <li><a href="#" class="dropdown-item">Cursos</a></li>
+                <li><a href="{{ route('carreras.index') }}" class="dropdown-item">Carreras </a></li>
+                <li><a href="{{ route('grados.index') }}" class="dropdown-item">Grados </a></li>
+                <li><a href="{{ route('secciones.index') }}" class="dropdown-item">Secciones </a></li>
+                <li><a href="{{ route('cursos.index') }}" class="dropdown-item">Cursos</a></li>
               </ul>
             </li>
             <li class="nav-item active">
               <a href="{{ route('usuarios.index') }}" class="nav-link">Usuarios</a>
+            </li>
+            <li class="nav-item active">
+              <a href="{{ route('usuarios.index') }}" class="nav-link">Habilitar grados</a>
+            </li>
+            <li class="nav-item active">
+              <a href="{{ route('usuarios.index') }}" class="nav-link">Pensum</a>
             </li>
           </ul>
         </div>
@@ -76,6 +78,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="content-wrapper" style="margin-bottom: 65px">
         <div class="row">
             <div class="col-md-12">
+                <div class="content-header"></div>
+                @if(isset($errors) && $errors->any())
+                    <div class="alert alert-danger">                      
+                        <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li><i class="icon fas fa-ban"></i> {{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                @if(session()->has('mensaje'))
+                    <div class="container-fluid">
+                        <div class="alert alert-success">
+                          <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <span><i class="icon fas fa-check"></i> {{ session()->get('mensaje') }}</span>
+                      </div>
+                    </div>
+                @endif
                 @yield('content')
             </div>
         </div>

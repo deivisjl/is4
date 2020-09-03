@@ -9,34 +9,26 @@
             <div class="col-md-6 offset-md-3">
                 <div class="card card-default">
                   <div class="card-header-custom">
-                      <strong>Editar registro</strong>
+                      <strong>Nuevo registro</strong>
                       <ol class="breadcrumb-custom float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('roles.index') }}">Roles</a></li>
-                        <li class="breadcrumb-item active">Editar</li>
+                        <li class="breadcrumb-item"><a href="{{ route('carreras.index') }}">Carreras</a></li>
+                        <li class="breadcrumb-item active">Nuevo</li>
                       </ol>
                   </div>
               <!-- /.card-header -->
               <div class="card-body">
-                  <form action="{{ url('roles', [$rol->id]) }}" method="POST" autocomplete="off">
-                            <input name="_method" type="hidden" value="PUT">
+                  <form action="{{ route('carreras.store') }}" method="post" autocomplete="off">
                       @csrf
                       <div class="form-group">
                           <label for="">Nombre</label>
-                          <input type="text" class="form-control {{ $errors->has('nombre') ? ' is-invalid' : '' }}" name="nombre" value="{{ $rol->nombre }}">
+                          <input type="text" class="form-control {{ $errors->has('nombre') ? ' is-invalid' : '' }}" name="nombre" value="{{ old('nombre') }}">
                           @if ($errors->has('nombre'))
                                         <p class="text-danger">{{ $errors->first('nombre') }}</p>
                                   @endif
                       </div>
                       <div class="form-group">
-                          <label for="">Descripción</label>
-                          <textarea name="descripcion" class="form-control {{ $errors->has('descripcion') ? ' is-invalid' : '' }}">{{ $rol->descripcion }}</textarea>
-                          @if ($errors->has('descripcion'))
-                                        <p class="text-danger">{{ $errors->first('descripcion') }}</p>
-                                  @endif
-                      </div>
-                      <div class="form-group">
-                          <button class="btn btn-success float-sm-right" type="submit">Editar</button>
+                          <button class="btn btn-primary float-sm-right" type="submit">Guardar</button>
                       </div>
                   </form>
               </div>

@@ -1,10 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="content-header">
-  </div>
-    <!-- /.content-header -->
-
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">

@@ -27,5 +27,15 @@ Route::get('/logout','Auth\LoginController@logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+/* Catalogos */
 Route::resource('/usuarios', 'Administrar\UsuarioController');
+
 Route::resource('/roles', 'Administrar\RolController');
+
+Route::resource('carreras','Administrar\CarreraController');
+
+Route::resource('grados','Administrar\GradoController');
+
+Route::resource('secciones','Administrar\SeccionController');
+
+Route::resource('cursos','Administrar\CursoController');
