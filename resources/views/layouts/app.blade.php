@@ -35,20 +35,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Administrar</a>
               <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                 <li><a href="{{ route('roles.index') }}" class="dropdown-item">Roles</a></li>
+                <li><a href="{{ route('usuarios.index') }}" class="dropdown-item">Usuarios</a></li>
                 <li><a href="{{ route('carreras.index') }}" class="dropdown-item">Carreras </a></li>
                 <li><a href="{{ route('grados.index') }}" class="dropdown-item">Grados </a></li>
                 <li><a href="{{ route('secciones.index') }}" class="dropdown-item">Secciones </a></li>
                 <li><a href="{{ route('cursos.index') }}" class="dropdown-item">Cursos</a></li>
+                <div class="dropdown-divider"></div>
+                <li><a href="{{ route('carrera-grado.index') }}" class="dropdown-item">Habilitar carreras</a></li>
               </ul>
             </li>
             <li class="nav-item active">
-              <a href="{{ route('usuarios.index') }}" class="nav-link">Usuarios</a>
+              <a href="{{ route('usuarios.index') }}" class="nav-link">Pensum</a>
             </li>
             <li class="nav-item active">
               <a href="{{ route('usuarios.index') }}" class="nav-link">Habilitar grados</a>
-            </li>
-            <li class="nav-item active">
-              <a href="{{ route('usuarios.index') }}" class="nav-link">Pensum</a>
             </li>
           </ul>
         </div>
@@ -63,7 +63,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
               <span class="dropdown-header">Administrador</span>
               <div class="dropdown-divider"></div>
-              <div class="dropdown-divider"></div>
+              {{-- <div class="dropdown-divider"></div> --}}
               <a href="/logout" class="dropdown-item">
                 <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
               </a>
