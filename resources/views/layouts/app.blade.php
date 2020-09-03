@@ -21,7 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <nav class="main-header navbar navbar-expand-md navbar-dark navbar-blue">
       <div class="container-fluid">
         <a href="/" class="navbar-brand">
-          <span class="brand-text font-weight-bold">IGPA</span>
+          <img src="{{ asset('img/logo.png') }}" alt="AdminLTE Logo" class="brand-image">
         </a>
   
         <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,10 +45,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </ul>
             </li>
             <li class="nav-item active">
-              <a href="{{ route('usuarios.index') }}" class="nav-link">Pensum</a>
+              <a href="{{ route('pensum.index') }}" class="nav-link">Pensum</a>
             </li>
             <li class="nav-item active">
-              <a href="{{ route('usuarios.index') }}" class="nav-link">Habilitar grados</a>
+              <a href="#" class="nav-link">Habilitar aulas</a>
             </li>
           </ul>
         </div>
@@ -61,7 +61,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <i class="fas fa-user-circle" style="font-size: 1.5rem"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-              <span class="dropdown-header">Administrador</span>
+              <span class="dropdown-header">{{ Auth::user()->persona->primer_nombre}} {{ Auth::user()->persona->primer_apellido}}</span>
               <div class="dropdown-divider"></div>
               {{-- <div class="dropdown-divider"></div> --}}
               <a href="/logout" class="dropdown-item">

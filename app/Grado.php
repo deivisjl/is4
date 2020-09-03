@@ -11,4 +11,9 @@ class Grado extends Model
     protected $fillable = [
         'id', 'nombre',
     ];
+
+    public function carrera_grado()
+    {
+        return $this->hasMany(CarreraGrado::class);
+    }
 }

@@ -11,6 +11,10 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
+    require('admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js');
+    require('admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js');
+    require('admin-lte/dist/js/adminlte.js');
+    require('admin-lte/plugins/jqvmap/jquery.vmap.min.js');
 } catch (e) {}
 
 /**

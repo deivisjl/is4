@@ -11,4 +11,9 @@ class Curso extends Model
     protected $fillable = [
         'id', 'nombre',
     ];
+
+    public function pensum()
+    {
+        return $this->belongsToMany(Pensum::class);
+    }
 }

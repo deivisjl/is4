@@ -41,3 +41,6 @@ Route::resource('secciones','Administrar\SeccionController');
 Route::resource('cursos','Administrar\CursoController');
 
 Route::resource('carrera-grado','Administrar\CarreraGradoController');
+
+/* Pensum */
+Route::resource('pensum','Pensum\PensumController');
