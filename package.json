@@ -24,6 +24,9 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "admin-lte": "3.0.5",
+        "sweetalert2": "8.17.1",
+        "toastr": "2.1.4",
         "vue-sweetalert2": "^3.0.6"
     }
 }

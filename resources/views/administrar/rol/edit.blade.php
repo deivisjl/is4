@@ -35,14 +35,14 @@
                           <label for="">Nombre</label>
                           <input type="text" class="form-control {{ $errors->has('nombre') ? ' is-invalid' : '' }}" name="nombre" value="{{ $rol->nombre }}">
                           @if ($errors->has('nombre'))
-                                        <span class="error invalid-feedback">{{ $errors->first('nombre') }}</span>
+                                        <p class="text-danger">{{ $errors->first('nombre') }}</p>
                                   @endif
                       </div>
                       <div class="form-group">
                           <label for="">Descripción</label>
                           <textarea name="descripcion" class="form-control {{ $errors->has('descripcion') ? ' is-invalid' : '' }}">{{ $rol->descripcion }}</textarea>
                           @if ($errors->has('descripcion'))
-                                        <span class="error invalid-feedback">{{ $errors->first('descripcion') }}</span>
+                                        <p class="text-danger">{{ $errors->first('descripcion') }}</p>
                                   @endif
                       </div>
                       <div class="form-group">

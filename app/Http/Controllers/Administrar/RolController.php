@@ -6,6 +6,7 @@ use App\Rol;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 
 class RolController extends Controller
 {
@@ -137,6 +138,24 @@ class RolController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try 
+        {
+            $rol = Rol::findOrFail($id);
+
+            $rol->delete();
+
+            return response()->json(['data' => 'El registro fue borrado con éxito'],200);
+        } 
+        catch (\Exception $ex) 
+        {
+            if ($ex instanceof QueryException) {
+                $codigo = $ex->errorInfo[1];
+    
+                if ($codigo == 1451) {
+                    return  response()->json(['error' => 'No se puede eliminar el registro porque está relacionado'],423);
+                }
+            }
+            return response()->json(['error' => $ex->getMessage()],423);
+        }
     }
 }

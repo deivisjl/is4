@@ -3,10 +3,16 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+window.Vue = require('vue');
+
+window.$ = window.jQuery = require('jquery');
+window.$.fn.DataTable = require( 'datatables.net' );
+window.$.fn.DataTable = require( 'datatables.net-bs4' );
+
+window.Swal = require('sweetalert2');
+window.Toastr = require('toastr');
 
 require('./bootstrap');
-
-window.Swal = require('vue-sweetalert2');
 
 /**
  * The following block of code may be used to automatically register your

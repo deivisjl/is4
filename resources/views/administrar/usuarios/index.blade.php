@@ -1,35 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h3>Usuarios</h3>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-              <li class="breadcrumb-item active">Usuarios</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
+  <div class="content-header"></div>
     <!-- /.content-header -->
-
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 offset-md-6">
-                <a href="{{ route('usuarios.create') }}" class="btn btn-primary float-right">Nuevo registro</a>
+               
             </div>
         </div>
         <div class="row">
             <!-- contenedor -->
             <div class="col-md-12">
-                <div class="card">
+                <div class="card card-default">
+                  <div class="card-header-custom">
+                      <strong>Usuarios</strong>
+                      <a href="{{ route('usuarios.create') }}" class="btn btn-primary float-right btn-sm">Nuevo registro</a>
+                  </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="listar" class="table table-striped table-bordered table-hover">
@@ -75,7 +64,7 @@
               {'data': 'nombre'},
               {'data': 'rol'},
               {'data': 'dpi'},   
-              {'defaultContent':'<a href="" class="editar badge bg-green"  data-toggle="tooltip" data-placement="top" title="Editar registro"><i class="fas fa-pencil-alt"></i> Editar</a> <a href="" class="borrar badge bg-danger"  data-toggle="tooltip" data-placement="top" title="Borrar registro"><i class="fas fa-trash-alt"></i> Eliminar</a>', "orderable":false}
+              {'defaultContent':'<a href="" class="editar btn-success btn-xs"  data-toggle="tooltip" data-placement="top" title="Editar registro"><i class="fas fa-pencil-alt"></i> Editar</a> <a href="" class="borrar btn-danger btn-xs"  data-toggle="tooltip" data-placement="top" title="Borrar registro"><i class="fas fa-trash-alt"></i> Eliminar</a>', "orderable":false}
           ],
           "language": idioma_spanish,
           "order": [[ 0, "asc" ]]

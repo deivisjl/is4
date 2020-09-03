@@ -1,23 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-4 offset-md-2">
-            <h3>Nuevo registro</h3>
-          </div><!-- /.col -->
-          <div class="col-sm-4">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-              <li class="breadcrumb-item"><a href="{{ route('usuarios.index') }}">Usuarios</a></li>
-              <li class="breadcrumb-item active">Nuevo</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+  <div class="content-header"></div>
+  <!-- /.content-header -->
 
     <!-- Main content -->
     <div class="content">
@@ -25,7 +10,15 @@
         <div class="row">
             <!-- contenedor -->
             <div class="col-md-8 offset-md-2">
-                <div class="card">
+                <div class="card card-default">
+                  <div class="card-header-custom">
+                       <strong>Nuevo registro</strong>
+                       <ol class="breadcrumb-custom float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('usuarios.index') }}">Usuarios</a></li>
+                        <li class="breadcrumb-item active">Nuevo</li>
+                      </ol>
+                  </div>
               <!-- /.card-header -->
               <div class="card-body">
                   <form action="{{ route('usuarios.store') }}" method="post" autocomplete="off">
@@ -37,53 +30,53 @@
                                   <label for="">Primer nombre</label>
                                   <input type="text" class="form-control {{ $errors->has('primer_nombre') ? ' is-invalid' : '' }}" name="primer_nombre" value="{{ old('primer_nombre') }}">
                                    @if ($errors->has('primer_nombre'))
-                                        <span class="error invalid-feedback">{{ $errors->first('primer_nombre') }}</span>
+                                        <p class="text-danger">{{ $errors->first('primer_nombre') }}</p>
                                   @endif
                               </div>
                               <div class="form-group">
                                   <label for="">Segundo nombre</label>
                                   <input type="text" class="form-control {{ $errors->has('segundo_nombre') ? ' is-invalid' : '' }}" name="segundo_nombre" value="{{ old('segundo_nombre') }}">
                                   @if ($errors->has('segundo_nombre'))
-                                        <span class="error invalid-feedback">{{ $errors->first('segundo_nombre') }}</span>
+                                        <p class="text-danger">{{ $errors->first('segundo_nombre') }}</p>
                                   @endif
                               </div>
                               <div class="form-group">
                                   <label for="">Tercer nombre</label>
                                   <input type="text" class="form-control {{ $errors->has('tercer_nombre') ? ' is-invalid' : '' }}" name="tercer_nombre" value="{{ old('tercer_nombre') }}">
                                   @if ($errors->has('tercer_nombre'))
-                                        <span class="error invalid-feedback">{{ $errors->first('tercer_nombre') }}</span>
+                                        <p class="text-danger">{{ $errors->first('tercer_nombre') }}</p>
                                   @endif
                               </div>
                               <div class="form-group">
                                   <label for="">Primer apellido</label>
                                   <input type="text" class="form-control {{ $errors->has('primer_apellido') ? ' is-invalid' : '' }}" name="primer_apellido" value="{{ old('primer_apellido') }}">
                                   @if ($errors->has('primer_apellido'))
-                                        <span class="error invalid-feedback">{{ $errors->first('primer_apellido') }}</span>
+                                        <p class="text-danger">{{ $errors->first('primer_apellido') }}</p>
                                   @endif
                               </div>
                               <div class="form-group">
                                   <label for="">Segundo apellido</label>
                                   <input type="text" class="form-control {{ $errors->has('segundo_apellido') ? ' is-invalid' : '' }}" name="segundo_apellido" value="{{ old('segundo_apellido') }}">
                                   @if ($errors->has('segundo_apellido'))
-                                        <span class="error invalid-feedback">{{ $errors->first('segundo_apellido') }}</span>
+                                        <p class="text-danger">{{ $errors->first('segundo_apellido') }}</p>
                                   @endif
                               </div>
                               <div class="form-group">
-                                  <label for="">Genéro</label>
+                                  <label for="">Género</label>
                                   <select name="genero" id="" class="form-control {{ $errors->has('genero') ? ' is-invalid' : '' }}" >
                                       <option value="0"> --Seleccione una opción-- </option>
                                       <option value="M">Masculino</option>
                                       <option value="F">Femenino</option>
                                   </select>
                                   @if ($errors->has('genero'))
-                                        <span class="error invalid-feedback">{{ $errors->first('genero') }}</span>
+                                        <p class="text-danger">{{ $errors->first('genero') }}</p>
                                   @endif
                               </div>
                               <div class="form-group">
                                   <label for="">Dirección</label>
                                   <textarea name="direccion" id="" class="form-control {{ $errors->has('direccion') ? ' is-invalid' : '' }}">{{ old('direccion') }}</textarea>
                                   @if ($errors->has('direccion'))
-                                        <span class="error invalid-feedback">{{ $errors->first('direccion') }}</span>
+                                        <p class="text-danger">{{ $errors->first('direccion') }}</p>
                                   @endif
                               </div>
                            </div>
@@ -98,28 +91,28 @@
                                         @endforeach
                                     </select>
                                     @if ($errors->has('rol'))
-                                        <span class="error invalid-feedback">{{ $errors->first('rol') }}</span>
+                                        <p class="text-danger">{{ $errors->first('rol') }}</p>
                                   @endif
                                </div>
                                <div class="form-group">
                                   <label for="">DPI</label>
                                   <input type="numeric" class="form-control {{ $errors->has('dpi') ? ' is-invalid' : '' }}" name="dpi" value="{{ old('dpi') }}">
                                   @if ($errors->has('dpi'))
-                                        <span class="error invalid-feedback">{{ $errors->first('dpi') }}</span>
+                                        <p class="text-danger">{{ $errors->first('dpi') }}</p>
                                   @endif
                                </div>
                                <div class="form-group">
                                   <label for="">Correo electrónico</label>
                                   <input type="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}">
                                   @if ($errors->has('email'))
-                                        <span class="error invalid-feedback">{{ $errors->first('email') }}</span>
+                                        <p class="text-danger">{{ $errors->first('email') }}</p>
                                   @endif
                                </div>
                                <div class="form-group">
                                   <label for="">Contraseña</label>
-                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password">
                                   @if ($errors->has('password'))
-                                        <span class="error invalid-feedback">{{ $errors->first('password') }}</span>
+                                        <p class="text-danger">{{ $errors->first('password') }}</p>
                                   @endif
                                </div>
                                <div class="form-group">

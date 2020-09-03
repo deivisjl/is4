@@ -1,10 +1,73 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+//@import url('https://fonts.googleapis.com/css?family=Nunito');
 
 // Variables
-@import 'variables';
+//@import 'variables';
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import '~admin-lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css';
+
+@import '~admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css';
+
+@import '~admin-lte/plugins/jqvmap/jqvmap.min.css';
+
+@import '~admin-lte/dist/css/adminlte.min.css';
+
+@import '~admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css';
+
+@import '~admin-lte/plugins/fontawesome-free/css/all.min.css';
+
+@import '~datatables.net-bs4/css/dataTables.bootstrap4.min.css';
 
 @import '~sweetalert2/dist/sweetalert2.css';
+
+@import '~toastr/build/toastr.css';
+
+
+.card-header-custom {
+	background-color: transparent;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    padding: .35rem 1.5rem;
+    position: relative;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+
+.navbar-blue{
+	background-color: #0078d4!important;
+}
+
+.breadcrumb-custom {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    list-style: none;
+    background-color: #ffffff;
+    border-radius: .25rem;
+}
+
+.swal2-icon{
+	width: 4em!important;
+    height: 4em!important;
+}
+
+.swal2-title{
+	font-size:18px!important;
+}
+
+.swal2-content{
+	font-size:15px!important;
+}
+
+.swal2-styled.swal2-confirm {
+	font-size:14px!important;
+}
+
+.swal2-styled.swal2-cancel {
+	font-size:14px!important;
+}
+.swal2-icon::before {
+    display: none!important;
+}
