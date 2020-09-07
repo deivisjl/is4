@@ -9,8 +9,9 @@
             <div class="col-md-8 offset-md-2">
                 <div class="card card-default">
                   <div class="card-header-custom">
-                      <strong>Carreras habilitadas</strong>
-                      <a href="{{ route('carrera-grado.create') }}" class="btn btn-primary float-right btn-sm">Nuevo registro</a>
+                      <strong>Cursos del pensum de {{ $registro->grado->nombre }}, {{ $registro->carrera->nombre }}</strong>
+                      <a href="{{ route('pensum.create', $registro->id) }}" class="btn btn-primary float-right btn-sm">Nuevo registro</a>
+                      <input type="hidden" name="registro" id="registro" value="{{ $registro->id }}">
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">
@@ -18,8 +19,7 @@
                           <thead>
                             <tr>
                               <th>Id</th>
-                              <th>Carrera</th>                   
-                              <th>Grado</th>                   
+                              <th>Nombre</th>                   
                               <th></th>
                             </tr>
                           </thead>
@@ -39,23 +39,33 @@
 @section('js')
 <script>
      $(document).ready(function() {
-          listar();
+        var registro = $('#registro').val();
+        
+        if(registro > 0 && !isNaN(registro))
+        {
+            var data = {registro:registro};
+            var params = new Array();
+            params.push(data);  
+            listar(params);
+        }
       });
-    var  listar = function(){
+    var  listar = function(params){
         var table = $("#listar").DataTable({
             "processing": true,
             "serverSide": true,
             "destroy":true,
             "ajax":{
-            'url': '/carrera-grado/show',
-            'type': 'GET'
+            'url': '/pensum/show',
+            'type': 'GET',
+            'data': {
+                   'buscar': params
+            }
           },
           
           "columns":[
               {'data': 'id', 'visible':false},
-              {'data': 'carrera'},
-              {'data': 'grado'},
-              {'defaultContent':'<a href="" class="editar btn-success btn-xs"  data-toggle="tooltip" data-placement="top" title="Editar registro"><i class="fas fa-pencil-alt"></i> Editar</a> <a href="" class="borrar btn-danger btn-xs"  data-toggle="tooltip" data-placement="top" title="Borrar registro"><i class="fas fa-trash-alt"></i> Eliminar</a>', "orderable":false}
+              {'data': 'nombre'},
+              {'defaultContent':'<a href="" class="borrar btn-danger btn-xs"  data-toggle="tooltip" data-placement="top" title="Borrar registro"><i class="fas fa-trash-alt"></i> Eliminar</a>', "orderable":false}
           ],
           "language": idioma_spanish,
           "order": [[ 0, "asc" ]]
@@ -65,13 +75,6 @@
     }
 
     var obtener_data_editar = function(tbody,table){
-         $(tbody).on("click","a.editar",function(e){
-            e.preventDefault();
-            var data = table.fnGetData($(this).parents("tr"));
-          
-          var id = data.id;
-           window.location.href = "/carrera-grado/" + id + "/edit";
-        });
 
          $(tbody).on("click","a.borrar",function(e){
              e.preventDefault();
@@ -90,7 +93,7 @@
                   cancelButtonText: 'Cancelar'
                 }).then((result) => {
                    if (result.value) {
-                      axios.delete('/carrera-grado/'+id)
+                      axios.delete('/pensum/'+id)
                           .then(response => {
                               Toastr.success(response.data.data,'Mensaje')
                               table._fnAjaxUpdate()

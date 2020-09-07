@@ -19,6 +19,7 @@ class CreatePensumTable extends Migration
             $table->bigInteger('carrera_grado_id')->unsigned();
             $table->foreign('curso_id')->references('id')->on('curso');
             $table->foreign('carrera_grado_id')->references('id')->on('carrera_grado');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
