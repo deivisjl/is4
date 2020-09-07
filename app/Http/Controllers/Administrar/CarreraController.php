@@ -59,7 +59,7 @@ class CarreraController extends Controller
      */
     public function show(Request $request)
     {
-        $ordenadores = array("nombre");
+        $ordenadores = array("id","nombre");
 
         $columna = $request['order'][0]["column"];
         

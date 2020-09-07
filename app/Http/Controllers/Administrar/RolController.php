@@ -63,7 +63,7 @@ class RolController extends Controller
      */
     public function show(Request $request)
     {
-        $ordenadores = array("nombre","descripcion");
+        $ordenadores = array("id","nombre","descripcion");
 
         $columna = $request['order'][0]["column"];
         

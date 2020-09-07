@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Pensum;
+namespace App\Http\Controllers\Administrar;
 
-use App\Curso;
-use App\Pensum;
-use App\Carrera;
-use App\CarreraGrado;
+use App\Horario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 
-class PensumController extends Controller
+class HorarioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,12 +17,7 @@ class PensumController extends Controller
      */
     public function index()
     {
-        $registros = array();
-
-        $carreras = Carrera::with('carrera_grado.grado','carrera_grado.pensum.curso')
-                    ->get();
-
-        return view('pensum.index',['carreras' => $carreras]);
+        return view('administrar.horario.index');
     }
 
     /**
@@ -33,13 +25,9 @@ class PensumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
-        $registro = CarreraGrado::findOrFail($id);
-
-        $cursos = Curso::all();
-        
-        return view('pensum.create',['registro' => $registro, 'cursos' => $cursos]);
+        return view('administrar.horario.create');
     }
 
     /**
@@ -51,53 +39,42 @@ class PensumController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'registro' => 'required|numeric|min:1',
-            'curso' => 'required|numeric|min:1',
+            'nombre' => 'required|string|max:100',
         ];            
 
         $this->validate($request, $rules);
-        
-        $pensum = new Pensum();
-        $pensum->curso_id = $request->get('curso');
-        $pensum->carrera_grado_id = $request->get('registro');
-        $pensum->save();
 
-        return redirect()->route('pensum-editar',$pensum->carrera_grado_id)->with(['mensaje' => 'Registro exitoso']);
+        $horario = new Horario();
+        $horario->nombre = $request->get('nombre');
+        $horario->save();
+
+        return redirect()->route('horarios.index')->with(['mensaje' => 'Registro exitoso']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Pensum  $pensum
+     * @param  \App\Horario  $horario
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
     {
-        $ordenadores = array("p.id","c.nombre");
+        $ordenadores = array("id","nombre");
 
         $columna = $request['order'][0]["column"];
         
         $criterio = $request['search']['value'];
 
-        $registro = $request['buscar'][0]['registro'];
 
-        $cursos = DB::table('pensum as p')
-                ->join('carrera_grado as cg','cg.id','p.carrera_grado_id')
-                ->join('curso as c','c.id','p.curso_id')                
-                ->select('p.id','c.nombre') 
-                ->where('cg.id',$registro)
-                ->whereNull('p.deleted_at')
+        $horarios = DB::table('horario')                
+                ->select('id','nombre') 
                 ->where($ordenadores[$columna], 'LIKE', '%' . $criterio . '%')
                 ->orderBy($ordenadores[$columna], $request['order'][0]["dir"])
                 ->skip($request['start'])
                 ->take($request['length'])
                 ->get();
               
-        $count = DB::table('pensum as p')
-                ->join('carrera_grado as cg','cg.id','p.carrera_grado_id')
-                ->join('curso as c','c.id','p.curso_id')                
-                ->where('cg.id',$registro)
-                ->whereNull('p.deleted_at')
+        $count = DB::table('horario')                
                 ->where($ordenadores[$columna], 'LIKE', '%' . $criterio . '%')
                 ->count();
                
@@ -105,24 +82,55 @@ class PensumController extends Controller
         'draw' => $request->draw,
         'recordsTotal' => $count,
         'recordsFiltered' => $count,
-        'data' => $cursos,
+        'data' => $horarios,
         );
 
         return response()->json($data, 200);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Show the form for editing the specified resource.
      *
-     * @param  \App\Pensum  $pensum
+     * @param  \App\Horario  $horario
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function edit(Horario $horario)
+    {
+        return view('administrar.horario.edit',['horario' => $horario]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Horario  $horario
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Horario $horario)
+    {
+        $rules = [
+            'nombre' => 'required|string|max:100',
+        ];            
+
+        $this->validate($request, $rules);
+
+        $horario->nombre = $request->get('nombre');
+        $horario->save();
+
+        return redirect()->route('horarios.index')->with(['mensaje' => 'Registro actualizado con éxito']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Horario  $horario
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Horario $horario)
     {
         try 
-        {   
-            $pensum = Pensum::findOrfail($id);
-            $pensum->delete();
+        {
+            $horario->delete();
 
             return response()->json(['data' => 'El registro fue borrado con éxito'],200);
         } 
@@ -137,12 +145,5 @@ class PensumController extends Controller
             }
             return response()->json(['error' => $ex->getMessage()],423);
         }
-    }
-
-    public function detalle($id)
-    {
-        $registro = CarreraGrado::findOrFail($id);
-        
-        return view('pensum.detalle',['registro' => $registro]);
     }
 }

@@ -42,6 +42,15 @@ Route::resource('cursos','Administrar\CursoController');
 
 Route::resource('carrera-grado','Administrar\CarreraGradoController');
 
+Route::resource('planes','Administrar\PlanController');
+
+Route::resource('horarios','Administrar\HorarioController');
+
+Route::resource('planes-horarios','Administrar\PlanHorarioController');
+
+Route::resource('ciclo-escolar','Administrar\CicloEscolarController');
+Route::get('ciclo-escolar-activar/{id}','Administrar\CicloEscolarController@activar');
+
 /* Pensum */
 Route::get('pensum','Pensum\PensumController@index')->name('pensum.index');
 Route::get('pensum/show','Pensum\PensumController@show');

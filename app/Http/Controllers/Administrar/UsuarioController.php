@@ -92,7 +92,7 @@ class UsuarioController extends Controller
      */
     public function show(Request $request)
     {
-        $ordenadores = array("users.email","rol.nombre");
+        $ordenadores = array("users.id","users.email","rol.nombre","users.dpi");
 
         $columna = $request['order'][0]["column"];
         

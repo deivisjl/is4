@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Administrar;
 
-use App\Grado;
+use App\Plan;
+use App\Horario;
+use App\PlanHorario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 
-class GradoController extends Controller
+class PlanHorarioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +19,7 @@ class GradoController extends Controller
      */
     public function index()
     {
-        return view('administrar.grado.index');
+        return view('administrar.plan-horario.index');
     }
 
     /**
@@ -27,7 +29,10 @@ class GradoController extends Controller
      */
     public function create()
     {
-        return view('administrar.grado.create');
+        $planes = Plan::all();
+        $horarios = Horario::all();
+        
+        return view('administrar.plan-horario.create',['planes' => $planes, 'horarios' => $horarios]);
     }
 
     /**
@@ -37,44 +42,50 @@ class GradoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {        
         $rules = [
-            'nombre' => 'required|string|max:100',
+            'plan' => 'required|numeric|min:1',
+            'horario' => 'required|numeric|min:1'
         ];            
 
         $this->validate($request, $rules);
 
-        $grado = new Grado();
-        $grado->nombre = $request->get('nombre');
-        $grado->save();
+        $registro = new PlanHorario();
+        $registro->plan_id = $request->get('plan');
+        $registro->horario_id = $request->get('horario');
+        $registro->save();
 
-        return redirect()->route('grados.index')->with(['mensaje' => 'Registro exitoso']);
+        return redirect()->route('planes-horarios.index')->with(['mensaje' => 'Registro exitoso']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Grado  $grado
+     * @param  \App\PlanHorario  $planHorario
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
     {
-        $ordenadores = array("id","nombre");
+        $ordenadores = array("ph.id","p.nombre","h.nombre");
 
         $columna = $request['order'][0]["column"];
         
         $criterio = $request['search']['value'];
 
 
-        $grados = DB::table('grado')                
-                ->select('id','nombre') 
+        $registros = DB::table('plan_horario as ph')  
+                ->join('plan as p','p.id','=','ph.plan_id')              
+                ->join('horario as h','h.id','=','ph.horario_id')              
+                ->select('ph.id','p.nombre as plan','h.nombre as horario') 
                 ->where($ordenadores[$columna], 'LIKE', '%' . $criterio . '%')
                 ->orderBy($ordenadores[$columna], $request['order'][0]["dir"])
                 ->skip($request['start'])
                 ->take($request['length'])
                 ->get();
               
-        $count = DB::table('grado')                
+        $count = DB::table('plan_horario as ph')  
+                ->join('plan as p','p.id','=','ph.plan_id')              
+                ->join('horario as h','h.id','=','ph.horario_id')                          
                 ->where($ordenadores[$columna], 'LIKE', '%' . $criterio . '%')
                 ->count();
                
@@ -82,7 +93,7 @@ class GradoController extends Controller
         'draw' => $request->draw,
         'recordsTotal' => $count,
         'recordsFiltered' => $count,
-        'data' => $grados,
+        'data' => $registros,
         );
 
         return response()->json($data, 200);
@@ -91,46 +102,54 @@ class GradoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Grado  $grado
+     * @param  \App\PlanHorario  $planHorario
      * @return \Illuminate\Http\Response
      */
-    public function edit(Grado $grado)
+    public function edit($id)
     {
-        return view('administrar.grado.edit',['grado' => $grado]);
+        $registro = PlanHorario::findOrfail($id);
+        $planes = Plan::all();
+        $horarios = Horario::all();
+
+        return view('administrar.plan-horario.edit',['registro' => $registro, 'planes' => $planes, 'horarios' => $horarios]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Grado  $grado
+     * @param  \App\PlanHorario  $planHorario
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Grado $grado)
+    public function update(Request $request, $id)
     {
         $rules = [
-            'nombre' => 'required|string|max:100',
+            'plan' => 'required|numeric|min:1',
+            'horario' => 'required|numeric|min:1'
         ];            
 
         $this->validate($request, $rules);
 
-        $grado->nombre = $request->get('nombre');
-        $grado->save();
+        $registro = PlanHorario::findOrFail($id);
+        $registro->plan_id = $request->get('plan');
+        $registro->horario_id = $request->get('horario');
+        $registro->save();
 
-        return redirect()->route('grados.index')->with(['mensaje' => 'Registro actualizado con éxito']);
+        return redirect()->route('planes-horarios.index')->with(['mensaje' => 'Registro actualizado con éxito']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Grado  $grado
+     * @param  \App\PlanHorario  $planHorario
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Grado $grado)
+    public function destroy($id)
     {
         try 
         {
-            $grado->delete();
+            $registro = PlanHorario::findOrFail($id);
+            $registro->delete();
 
             return response()->json(['data' => 'El registro fue borrado con éxito'],200);
         } 

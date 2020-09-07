@@ -36,11 +36,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                 <li><a href="{{ route('roles.index') }}" class="dropdown-item">Roles</a></li>
                 <li><a href="{{ route('usuarios.index') }}" class="dropdown-item">Usuarios</a></li>
+                <li><a href="{{ route('planes.index') }}" class="dropdown-item">Plan</a></li>
                 <li><a href="{{ route('carreras.index') }}" class="dropdown-item">Carreras </a></li>
                 <li><a href="{{ route('grados.index') }}" class="dropdown-item">Grados </a></li>
                 <li><a href="{{ route('secciones.index') }}" class="dropdown-item">Secciones </a></li>
                 <li><a href="{{ route('cursos.index') }}" class="dropdown-item">Cursos</a></li>
+                <li><a href="{{ route('horarios.index') }}" class="dropdown-item">Horarios</a></li>
                 <div class="dropdown-divider"></div>
+                <li><a href="{{ route('ciclo-escolar.index') }}" class="dropdown-item">Ciclo escolar</a></li>
+                <li><a href="{{ route('planes-horarios.index') }}" class="dropdown-item">Habilitar horarios</a></li>
                 <li><a href="{{ route('carrera-grado.index') }}" class="dropdown-item">Habilitar carreras</a></li>
               </ul>
             </li>
@@ -79,17 +83,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="row">
             <div class="col-md-12">
                 <div class="content-header"></div>
-                @if(isset($errors) && $errors->any())
-                    <div class="alert alert-danger">                      
-                        <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <ul>
-                            @foreach($errors->all() as $error)
-                                <li><i class="icon fas fa-ban"></i> {{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
                 @if(session()->has('mensaje'))
                     <div class="container-fluid">
                         <div class="alert alert-success">

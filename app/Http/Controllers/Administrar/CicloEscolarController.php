@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Administrar;
 
-use App\Grado;
+use App\CicloEscolar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Database\QueryException;
 
-class GradoController extends Controller
+class CicloEscolarController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +16,7 @@ class GradoController extends Controller
      */
     public function index()
     {
-        return view('administrar.grado.index');
+        return view('administrar.ciclo-escolar.index');
     }
 
     /**
@@ -27,7 +26,7 @@ class GradoController extends Controller
      */
     public function create()
     {
-        return view('administrar.grado.create');
+        return view('administrar.ciclo-escolar.create');
     }
 
     /**
@@ -39,22 +38,22 @@ class GradoController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'nombre' => 'required|string|max:100',
+            'nombre' => 'required|numeric|unique:ciclo_escolar',
         ];            
 
         $this->validate($request, $rules);
 
-        $grado = new Grado();
-        $grado->nombre = $request->get('nombre');
-        $grado->save();
+        $ciclo = new CicloEscolar();
+        $ciclo->nombre = $request->get('nombre');
+        $ciclo->save();
 
-        return redirect()->route('grados.index')->with(['mensaje' => 'Registro exitoso']);
+        return redirect()->route('ciclo-escolar.index')->with(['mensaje' => 'Registro exitoso']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Grado  $grado
+     * @param  \App\CicloEscolar  $cicloEscolar
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
@@ -66,15 +65,15 @@ class GradoController extends Controller
         $criterio = $request['search']['value'];
 
 
-        $grados = DB::table('grado')                
-                ->select('id','nombre') 
+        $ciclos = DB::table('ciclo_escolar')                
+                ->select('id','nombre','activo') 
                 ->where($ordenadores[$columna], 'LIKE', '%' . $criterio . '%')
                 ->orderBy($ordenadores[$columna], $request['order'][0]["dir"])
                 ->skip($request['start'])
                 ->take($request['length'])
                 ->get();
               
-        $count = DB::table('grado')                
+        $count = DB::table('ciclo_escolar')                
                 ->where($ordenadores[$columna], 'LIKE', '%' . $criterio . '%')
                 ->count();
                
@@ -82,7 +81,7 @@ class GradoController extends Controller
         'draw' => $request->draw,
         'recordsTotal' => $count,
         'recordsFiltered' => $count,
-        'data' => $grados,
+        'data' => $ciclos,
         );
 
         return response()->json($data, 200);
@@ -91,58 +90,55 @@ class GradoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Grado  $grado
+     * @param  \App\CicloEscolar  $cicloEscolar
      * @return \Illuminate\Http\Response
      */
-    public function edit(Grado $grado)
+    public function edit(CicloEscolar $cicloEscolar)
     {
-        return view('administrar.grado.edit',['grado' => $grado]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Grado  $grado
+     * @param  \App\CicloEscolar  $cicloEscolar
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Grado $grado)
+    public function update(Request $request, CicloEscolar $cicloEscolar)
     {
-        $rules = [
-            'nombre' => 'required|string|max:100',
-        ];            
-
-        $this->validate($request, $rules);
-
-        $grado->nombre = $request->get('nombre');
-        $grado->save();
-
-        return redirect()->route('grados.index')->with(['mensaje' => 'Registro actualizado con éxito']);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Grado  $grado
+     * @param  \App\CicloEscolar  $cicloEscolar
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Grado $grado)
+    public function destroy(CicloEscolar $cicloEscolar)
+    {
+        //
+    }
+
+    public function activar($id)
     {
         try 
         {
-            $grado->delete();
+            return DB::transaction(function () use($id) {
+                $registro = CicloEscolar::where('activo',1)->first();
+                $registro->activo = 0;
+                $registro->save();
 
-            return response()->json(['data' => 'El registro fue borrado con éxito'],200);
+                $registro = CicloEscolar::findOrFail($id);
+                $registro->activo = 1;
+                $registro->save();
+
+                return response()->json(['data' => 'Registro actualizado con éxito'],200);
+            });
         } 
         catch (\Exception $ex) 
         {
-            if ($ex instanceof QueryException) {
-                $codigo = $ex->errorInfo[1];
-    
-                if ($codigo == 1451) {
-                    return  response()->json(['error' => 'No se puede eliminar el registro porque está relacionado'],423);
-                }
-            }
             return response()->json(['error' => $ex->getMessage()],423);
         }
     }
