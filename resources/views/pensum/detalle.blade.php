@@ -9,7 +9,7 @@
             <div class="col-md-8 offset-md-2">
                 <div class="card card-default">
                   <div class="card-header-custom">
-                      <strong>Cursos del pensum de {{ $registro->grado->nombre }}, {{ $registro->carrera->nombre }}</strong>
+                      <h5 class="float-left">Cursos del pensum de {{ $registro->grado->nombre }}, {{ $registro->carrera->nombre }}</h5>
                       <a href="{{ route('pensum.create', $registro->id) }}" class="btn btn-primary float-right btn-sm">Nuevo registro</a>
                       <input type="hidden" name="registro" id="registro" value="{{ $registro->id }}">
                   </div>

@@ -9,7 +9,7 @@
             <div class="col-md-12">
                 <div class="card card-default">
                   <div class="card-header-custom">
-                      <strong>Roles</strong>
+                      <h5 class="float-left">Roles</h5>
                       <a href="{{ route('roles.create') }}" class="btn btn-primary float-right btn-sm">Nuevo registro</a>
                   </div>
                   <!-- /.card-header -->

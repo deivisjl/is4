@@ -28,4 +28,9 @@ class CarreraGrado extends Model
     {
         return $this->hasMany(Pensum::class);
     }
+
+    public function aula()
+    {
+        return $this->hasMany(Aula::class);
+    }
 }

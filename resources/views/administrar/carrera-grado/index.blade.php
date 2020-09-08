@@ -9,7 +9,7 @@
             <div class="col-md-8 offset-md-2">
                 <div class="card card-default">
                   <div class="card-header-custom">
-                      <strong>Carreras habilitadas</strong>
+                      <h5 class="float-left">Carreras habilitadas</h5>
                       <a href="{{ route('carrera-grado.create') }}" class="btn btn-primary float-right btn-sm">Nuevo registro</a>
                   </div>
                   <!-- /.card-header -->

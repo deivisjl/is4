@@ -9,7 +9,7 @@
             <div class="col-md-8 offset-md-2">
                 <div class="card card-default">
                   <div class="card-header-custom">
-                      <strong>Horarios habilitados</strong>
+                      <h5 class="float-left">Horarios habilitados</h5>
                       <a href="{{ route('planes-horarios.create') }}" class="btn btn-primary float-right btn-sm">Nuevo registro</a>
                   </div>
                   <!-- /.card-header -->

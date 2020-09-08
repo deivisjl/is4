@@ -12,37 +12,37 @@
                       <h5 class="float-left">Nuevo registro</h5>
                       <ol class="breadcrumb-custom float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('carrera-grado.index') }}">Carreras y grados</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('aulas.index') }}">Aulas</a></li>
                         <li class="breadcrumb-item active">Nuevo</li>
                       </ol>
                   </div>
               <!-- /.card-header -->
               <div class="card-body">
-                  <form action="{{ route('carrera-grado.store') }}" method="post" autocomplete="off">
+                  <form action="{{ route('aulas.store') }}" method="post" autocomplete="off">
                       @csrf
                       <div class="form-group">
                           <label for="">Grado</label>
-                          <select name="grado" class="form-control {{ $errors->has('nombre') ? ' is-invalid' : '' }}" name="nombre" value="{{ old('nombre') }}">
-                              <option value="0">--Seleccione una opción--</option>
-                              @foreach($grados as $grado)
-                                <option value="{{ $grado->id }}">{{ $grado->nombre }}</option>
+                          <select name="carrera" id="carrera" class="form-control">
+                              <option value="0">-- Seleccione una opción --</option>
+                              @foreach($carreras as $carrera)
+                                <option value="{{ $carrera->id }}">{{ $carrera->grado->nombre }}, {{ $carrera->carrera->nombre}}</option>
                               @endforeach
-                           </select>
-                          @if ($errors->has('grado'))
-                                <p class="text-danger">{{ $errors->first('grado') }}</p>
-                           @endif
+                          </select>
+                          @if ($errors->has('carrera'))
+                                <p class="text-danger">{{ $errors->first('carrera') }}</p>
+                          @endif
                       </div>
                       <div class="form-group">
-                        <label for="">Carrera</label>
-                        <select name="carrera" class="form-control {{ $errors->has('nombre') ? ' is-invalid' : '' }}" name="nombre" value="{{ old('nombre') }}">
-                            <option value="0">--Seleccione una opción--</option>
-                            @foreach($carreras as $carrera)
-                              <option value="{{ $carrera->id }}">{{ $carrera->nombre }}</option>
+                        <label for="">Sección</label>
+                        <select name="seccion" id="seccion" class="form-control">
+                            <option value="0">-- Seleccione una opción --</option>
+                            @foreach($secciones as $seccion)
+                              <option value="{{ $seccion->id }}">{{ $seccion->nombre }}</option>
                             @endforeach
-                         </select>
-                        @if ($errors->has('carrera'))
-                              <p class="text-danger">{{ $errors->first('carrera') }}</p>
-                         @endif
+                        </select>
+                        @if ($errors->has('seccion'))
+                              <p class="text-danger">{{ $errors->first('seccion') }}</p>
+                        @endif
                     </div>
                       <div class="form-group">
                           <button class="btn btn-primary float-sm-right" type="submit">Guardar</button>

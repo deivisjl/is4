@@ -14,7 +14,7 @@
             <div class="col-md-12">
                 <div class="card card-default">
                   <div class="card-header-custom">
-                      <strong>Usuarios</strong>
+                      <h5 class="float-left">Usuarios</h5>
                       <a href="{{ route('usuarios.create') }}" class="btn btn-primary float-right btn-sm">Nuevo registro</a>
                   </div>
               <!-- /.card-header -->

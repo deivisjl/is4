@@ -9,7 +9,7 @@
             <div class="col-md-6 offset-md-3">
                 <div class="card card-default">
                   <div class="card-header-custom">
-                      <strong>Editar registro</strong>
+                      <h5 class="float-left">Editar registro</h5>
                       <ol class="breadcrumb-custom float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('carreras.index') }}">Carreras</a></li>

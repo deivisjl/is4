@@ -17,7 +17,7 @@
 <body class="hold-transition login-page text-sm">
 <div class="login-box">
   <div class="login-logo">
-    <a href="#"><b>IGPA</b></a>
+    <a href="/"><img src="{{ asset('img/logo-azul.png') }}" alt="AdminLTE Logo" class="brand-image" style="height: 76px;"></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">

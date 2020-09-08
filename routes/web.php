@@ -11,17 +11,12 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes(['register' => false, 'reset' => false]);
 
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
 
 Route::get('/logout','Auth\LoginController@logout');
 
@@ -58,3 +53,6 @@ Route::get('pensum/create/{id}','Pensum\PensumController@create')->name('pensum.
 Route::post('pensum','Pensum\PensumController@store')->name('pensum.store');
 Route::get('pensum-editar/{id}','Pensum\PensumController@detalle')->name('pensum-editar');
 Route::delete('pensum/{id}','Pensum\PensumController@destroy');
+
+/* Aulas */
+Route::resource('aulas','Aula\AulaController');

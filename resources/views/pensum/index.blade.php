@@ -25,7 +25,7 @@
                                         <div class="card">
                                             <div class="card-header-custom">
                                                 <span>{{ $item->grado->nombre }}</span>
-                                                <a href="{{ route('pensum-editar', $item->id) }}" class="btn btn-success btn-sm float-right">Editar pensum</a>
+                                                <a href="{{ route('pensum-editar', $item->id) }}" class="btn btn-success btn-xs float-right">Editar pensum</a>
                                             </div>
                                             <div class="card-body">
                                                 @if(sizeof($item->pensum) < 1)

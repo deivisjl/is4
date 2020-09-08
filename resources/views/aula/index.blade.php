@@ -9,8 +9,8 @@
             <div class="col-md-8 offset-md-2">
                 <div class="card card-default">
                   <div class="card-header-custom">
-                      <h5 class="float-left">Planes</h5>
-                      <a href="{{ route('planes.create') }}" class="btn btn-primary float-right btn-sm">Nuevo registro</a>
+                      <h5 class="float-left">Aulas, ciclo escolar {{ $ciclo->nombre }}</h5>
+                      <a href="{{ route('aulas.create') }}" class="btn btn-primary float-right btn-sm">Nuevo registro</a>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">
@@ -19,6 +19,7 @@
                             <tr>
                               <th>Id</th>
                               <th>Nombre</th>                   
+                              <th>Sección</th>
                               <th></th>
                             </tr>
                           </thead>
@@ -46,13 +47,14 @@
             "serverSide": true,
             "destroy":true,
             "ajax":{
-            'url': '/planes/show',
+            'url': '/aulas/show',
             'type': 'GET'
           },
           
           "columns":[
               {'data': 'id', 'visible':false},
-              {'data': 'nombre'},
+              {'data': 'aula'},
+              {'data': 'seccion'},
               {'defaultContent':'<a href="" class="editar btn-success btn-xs"  data-toggle="tooltip" data-placement="top" title="Editar registro"><i class="fas fa-pencil-alt"></i> Editar</a> <a href="" class="borrar btn-danger btn-xs"  data-toggle="tooltip" data-placement="top" title="Borrar registro"><i class="fas fa-trash-alt"></i> Eliminar</a>', "orderable":false}
           ],
           "language": idioma_spanish,
@@ -68,7 +70,7 @@
             var data = table.fnGetData($(this).parents("tr"));
           
           var id = data.id;
-           window.location.href = "/planes/" + id + "/edit";
+           window.location.href = "/aulas/" + id + "/edit";
         });
 
          $(tbody).on("click","a.borrar",function(e){
@@ -88,7 +90,7 @@
                   cancelButtonText: 'Cancelar'
                 }).then((result) => {
                    if (result.value) {
-                      axios.delete('/planes/'+id)
+                      axios.delete('/aulas/'+id)
                           .then(response => {
                               Toastr.success(response.data.data,'Mensaje')
                               table._fnAjaxUpdate()

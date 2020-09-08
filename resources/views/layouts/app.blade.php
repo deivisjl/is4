@@ -13,7 +13,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
-<body class="hold-transition layout-top-nav text-sm">
+<body class="hold-transition layout-top-nav text-sm layout-navbar-fixed">
 <div id="app">
   <div class="wrapper">
 
@@ -52,7 +52,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <a href="{{ route('pensum.index') }}" class="nav-link">Pensum</a>
             </li>
             <li class="nav-item active">
-              <a href="#" class="nav-link">Habilitar aulas</a>
+              <a href="{{ route('aulas.index') }}" class="nav-link">Habilitar aulas</a>
             </li>
           </ul>
         </div>
