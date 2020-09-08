@@ -52,7 +52,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <a href="{{ route('pensum.index') }}" class="nav-link">Pensum</a>
             </li>
             <li class="nav-item active">
-              <a href="{{ route('aulas.index') }}" class="nav-link">Habilitar aulas</a>
+              <a href="{{ route('aulas.index') }}" class="nav-link">Aulas</a>
+            </li>
+            <li class="nav-item active">
+              <a href="{{ route('alumnos.index') }}" class="nav-link">Alumnos</a>
             </li>
           </ul>
         </div>

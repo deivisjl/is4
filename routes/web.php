@@ -56,3 +56,6 @@ Route::delete('pensum/{id}','Pensum\PensumController@destroy');
 
 /* Aulas */
 Route::resource('aulas','Aula\AulaController');
+
+/* Alumno */
+Route::resource('alumnos','Alumno\AlumnoController');
