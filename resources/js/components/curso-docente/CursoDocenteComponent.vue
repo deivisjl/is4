@@ -190,7 +190,7 @@ export default {
             axios.post("/curso-docente",data)			
 				.then((r) => {
 					Toastr.success(r.data.data, "Mensaje");
-					//window.location.href = "/";
+					window.location.href = "/docentes";
 				})
 				.catch((error) => {
 					Toastr.error(error.response.data.error, "Mensaje");

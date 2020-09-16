@@ -62,6 +62,7 @@ Route::group(['middleware' =>['auth']],function(){
 
     /* Docentes */
     Route::get('docentes','Docentes\DocenteController@index')->name('docente.index');
+    Route::get('docente-detalle/{id}','Docentes\DocenteController@detalle')->name('docente.detalle');
 
     /* Curso docente */
     Route::get('curso-docente','Pensum\CursoDocenteController@index')->name('curso.docente');
