@@ -11,51 +11,63 @@
 |
 */
 
-Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes(['register' => false, 'reset' => false]);
 
-
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('/logout','Auth\LoginController@logout');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' =>['auth']],function(){
 
-/* Catalogos */
-Route::resource('/usuarios', 'Administrar\UsuarioController');
+    Route::get('/', 'HomeController@index')->name('home');
 
-Route::resource('/roles', 'Administrar\RolController');
+    Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('carreras','Administrar\CarreraController');
+    /* Catalogos */
+    Route::resource('/usuarios', 'Administrar\UsuarioController');
 
-Route::resource('grados','Administrar\GradoController');
+    Route::resource('/roles', 'Administrar\RolController');
 
-Route::resource('secciones','Administrar\SeccionController');
+    Route::resource('carreras','Administrar\CarreraController');
 
-Route::resource('cursos','Administrar\CursoController');
+    Route::resource('grados','Administrar\GradoController');
 
-Route::resource('carrera-grado','Administrar\CarreraGradoController');
+    Route::resource('secciones','Administrar\SeccionController');
 
-Route::resource('planes','Administrar\PlanController');
+    Route::resource('cursos','Administrar\CursoController');
 
-Route::resource('horarios','Administrar\HorarioController');
+    Route::resource('carrera-grado','Administrar\CarreraGradoController');
 
-Route::resource('planes-horarios','Administrar\PlanHorarioController');
+    Route::resource('planes','Administrar\PlanController');
 
-Route::resource('ciclo-escolar','Administrar\CicloEscolarController');
-Route::get('ciclo-escolar-activar/{id}','Administrar\CicloEscolarController@activar');
+    Route::resource('horarios','Administrar\HorarioController');
 
-/* Pensum */
-Route::get('pensum','Pensum\PensumController@index')->name('pensum.index');
-Route::get('pensum/show','Pensum\PensumController@show');
-Route::get('pensum/create/{id}','Pensum\PensumController@create')->name('pensum.create');
-Route::post('pensum','Pensum\PensumController@store')->name('pensum.store');
-Route::get('pensum-editar/{id}','Pensum\PensumController@detalle')->name('pensum-editar');
-Route::delete('pensum/{id}','Pensum\PensumController@destroy');
+    Route::resource('planes-horarios','Administrar\PlanHorarioController');
 
-/* Aulas */
-Route::resource('aulas','Aula\AulaController');
+    Route::resource('ciclo-escolar','Administrar\CicloEscolarController');
+    Route::get('ciclo-escolar-activar/{id}','Administrar\CicloEscolarController@activar');
 
-/* Alumno */
-Route::resource('alumnos','Alumno\AlumnoController');
+    /* Pensum */
+    Route::get('pensum','Pensum\PensumController@index')->name('pensum.index');
+    Route::get('pensum/show','Pensum\PensumController@show');
+    Route::get('pensum/create/{id}','Pensum\PensumController@create')->name('pensum.create');
+    Route::post('pensum','Pensum\PensumController@store')->name('pensum.store');
+    Route::get('pensum-editar/{id}','Pensum\PensumController@detalle')->name('pensum-editar');
+    Route::delete('pensum/{id}','Pensum\PensumController@destroy');
+
+    /* Aulas */
+    Route::resource('aulas','Aula\AulaController');
+
+    /* Alumno */
+    Route::resource('alumnos','Alumno\AlumnoController');
+
+    /* Docentes */
+    Route::get('docentes','Docentes\DocenteController@index')->name('docente.index');
+
+    /* Curso docente */
+    Route::get('curso-docente','Pensum\CursoDocenteController@index')->name('curso.docente');
+    Route::get('curso-docente-aulas/{id}','Pensum\CursoDocenteController@aulas');
+    Route::get('curso-docente-pensum/{id}','Pensum\CursoDocenteController@cursos');
+    Route::get('curso-docente-profesores/','Pensum\CursoDocenteController@profesores');
+    Route::post('curso-docente','Pensum\CursoDocenteController@asignar');
+
+});

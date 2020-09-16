@@ -35,7 +35,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Administrar</a>
               <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                 <li><a href="{{ route('roles.index') }}" class="dropdown-item">Roles</a></li>
-                <li><a href="{{ route('usuarios.index') }}" class="dropdown-item">Usuarios</a></li>
                 <li><a href="{{ route('planes.index') }}" class="dropdown-item">Plan</a></li>
                 <li><a href="{{ route('carreras.index') }}" class="dropdown-item">Carreras </a></li>
                 <li><a href="{{ route('grados.index') }}" class="dropdown-item">Grados </a></li>
@@ -49,14 +48,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </ul>
             </li>
             <li class="nav-item active">
+              <a href="{{ route('usuarios.index') }}" class="nav-link">Usuarios</a>
+            </li>
+            <li class="nav-item active">
               <a href="{{ route('pensum.index') }}" class="nav-link">Pensum</a>
             </li>
             <li class="nav-item active">
               <a href="{{ route('aulas.index') }}" class="nav-link">Aulas</a>
             </li>
-            <li class="nav-item active">
-              <a href="{{ route('alumnos.index') }}" class="nav-link">Alumnos</a>
+            <li class="nav-item dropdown active">
+              <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Docentes</a>
+              <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                <li><a href="{{ route('docente.index') }}" class="dropdown-item">Listado de docentes</a></li>
+                <li><a href="{{ route('curso.docente') }}" class="dropdown-item">Asignar docentes</a></li>
+              </ul>
             </li>
+            <li class="nav-item dropdown active">
+              <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Alumnos</a>
+              <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                <li><a href="{{ route('alumnos.index') }}" class="dropdown-item">Listado de alumnos</a></li>
+                <li><a href="#" class="dropdown-item">Inscripciones</a></li>
+              </ul>
+            </li>
+            {{-- <li class="nav-item active">
+              <a href="{{ route('alumnos.index') }}" class="nav-link">Pagos</a>
+            </li>
+            <li class="nav-item active">
+              <a href="{{ route('alumnos.index') }}" class="nav-link">Reportes</a>
+            </li> --}}
           </ul>
         </div>
   

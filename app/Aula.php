@@ -26,4 +26,9 @@ class Aula extends Model
     {
         return $this->belongsTo(CicloEscolar::class);
     }
+
+    public function profesor_curso()
+    {
+        return $this->hasMany(ProfesorCurso::class);
+    }
 }

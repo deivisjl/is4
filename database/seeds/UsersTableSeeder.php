@@ -17,6 +17,16 @@ class UsersTableSeeder extends Seeder
     	Rol::create([
     		'nombre' =>'Administrador',
     		'descripcion' =>'Posee permisos globales',
+		]);
+		
+		Rol::create([
+    		'nombre' =>'Profesor',
+    		'descripcion' =>'Posee permisos para evaluar alumnos',
+		]);
+		
+		Rol::create([
+    		'nombre' =>'Digitador',
+    		'descripcion' =>'Posee permisos para digitar datos',
     	]);
 
     	Persona::create([

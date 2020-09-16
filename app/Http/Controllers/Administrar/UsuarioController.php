@@ -102,7 +102,7 @@ class UsuarioController extends Controller
         $usuarios = DB::table('persona')
                 ->join('users','users.persona_id','=','persona.id')
                  ->join('rol','users.rol_id','=','rol.id')
-                ->select(DB::raw('CONCAT(persona.primer_nombre," ",persona.segundo_nombre," ",persona.tercer_nombre," ",persona.primer_apellido," ",persona.segundo_apellido) as nombre'),'rol.nombre as rol','users.dpi','users.email') 
+                ->select(DB::raw('CONCAT_WS(" ",persona.primer_nombre," ",persona.segundo_nombre," ",persona.tercer_nombre," ",persona.primer_apellido," ",persona.segundo_apellido) as nombre'),'rol.nombre as rol','users.dpi','users.email') 
                 ->where($ordenadores[$columna], 'LIKE', '%' . $criterio . '%')
                 ->orderBy($ordenadores[$columna], $request['order'][0]["dir"])
                 ->skip($request['start'])
