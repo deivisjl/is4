@@ -2,6 +2,15 @@
 
 @section('content')
     <!-- Main content -->
+    @if(sizeof($docentes) < 1)
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="callout callout-info">
+                    <h5>No hay docentes para mostrar.</h5>
+                </div>
+            </div>
+        </div>
+    @else
     <div class="content">
       <div class="container-fluid">
         <div class="row">
@@ -18,11 +27,6 @@
               <!-- /.card-header -->
               <div class="card-body">
                   <div class="row">
-                      @if(sizeof($docentes) < 1)
-                        <div class="callout callout-info">
-                            <h5>No hay docentes para mostrar.</h5>
-                        </div>
-                      @endif
                       @foreach($docentes as $key => $docente)
                         <div class="col-md-3">
                             <div class="card card-default">
@@ -51,4 +55,5 @@
         <!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
+    @endif
 @endsection
