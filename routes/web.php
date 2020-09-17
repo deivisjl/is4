@@ -71,4 +71,9 @@ Route::group(['middleware' =>['auth']],function(){
     Route::get('curso-docente-profesores/','Pensum\CursoDocenteController@profesores');
     Route::post('curso-docente','Pensum\CursoDocenteController@asignar');
 
+    /* Inscrito */
+    Route::get('inscripciones','Inscrito\InscritoController@index')->name('inscripciones.index');
+    Route::get('inscripciones-alumnos','Inscrito\InscritoController@alumnos');
+    Route::post('inscripciones','Inscrito\InscritoController@inscribir_alumnos');
+
 });

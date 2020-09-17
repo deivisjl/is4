@@ -4,6 +4,7 @@ use App\Plan;
 use App\Grado;
 use App\Carrera;
 use App\Seccion;
+use App\Bimestre;
 use App\CicloEscolar;
 use Illuminate\Database\Seeder;
 
@@ -39,6 +40,13 @@ class CatalogoTableSeeder extends Seeder
         Plan::insert([
             ['nombre' => 'Plan diario'],
             ['nombre' => 'Plan fin de semana']
+        ]);
+        
+        Bimestre::insert([
+            ['nombre' => 'Primer bimestre'],
+            ['nombre' => 'Segundo bimestre'],
+            ['nombre' => 'Tercer bimestre'],
+            ['nombre' => 'Cuarto bimestre'],
         ]);
 
         CicloEscolar::insert([

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAulaTable extends Migration
+class CreateInscritoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateAulaTable extends Migration
      */
     public function up()
     {
-        Schema::create('aula', function (Blueprint $table) {
+        Schema::create('inscrito', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('carrera_grado_id')->unsigned();
-            //$table->bigInteger('plan_id')->unsigned();
-            $table->bigInteger('seccion_id')->unsigned();
+            $table->bigInteger('alumno_id')->unsigned();
+            $table->bigInteger('aula_id')->unsigned();
             $table->bigInteger('ciclo_escolar_id')->unsigned();
-            $table->foreign('carrera_grado_id')->references('id')->on('carrera_grado');
-            //$table->foreign('plan_id')->references('id')->on('plan');
-            $table->foreign('seccion_id')->references('id')->on('seccion');
+            $table->integer('promovido')->default(0);
+            $table->integer('repitente')->default(0);
+            $table->foreign('alumno_id')->references('id')->on('alumno');
+            $table->foreign('aula_id')->references('id')->on('aula');
             $table->foreign('ciclo_escolar_id')->references('id')->on('ciclo_escolar');
             $table->timestamps();
         });
@@ -34,6 +34,6 @@ class CreateAulaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('aula');
+        Schema::dropIfExists('inscrito');
     }
 }

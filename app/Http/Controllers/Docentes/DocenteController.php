@@ -66,8 +66,6 @@ class DocenteController extends Controller
             $registros[$key]['aula'] = (array)$aula;
             $registros[$key]['aula']['cursos'] = $cursos; 
         }
-
-        //return response()->json(['data' => $registros]);
         
         return view('docente.detalle',['registros' => $registros,'ciclo' => $ciclo]);
     }
