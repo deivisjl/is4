@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pensum;
 
 use App\Aula;
+use App\Plan;
 use App\CicloEscolar;
 use App\ProfesorCurso;
 use Illuminate\Http\Request;
@@ -20,14 +21,19 @@ class CursoDocenteController extends Controller
     {
         $ciclo = CicloEscolar::where('activo',1)->first();
 
-        $registro = DB::table('carrera as c')
-                    ->select('c.id','c.nombre')
-                    ->get();
+        $planes = Plan::all();
 
-        return view('curso-docente.index',['registro' => $registro,'ciclo' => $ciclo]);
+        $registro = DB::table('aula as a')
+                        ->join('carrera_grado as cg','a.carrera_grado_id','cg.id')
+                        ->join('carrera as c','cg.carrera_id','c.id')
+                        ->select(DB::raw('DISTINCT(cg.carrera_id) as id'),'c.nombre')
+                        ->where('a.ciclo_escolar_id',$ciclo->id)
+                        ->get();
+                        
+        return view('curso-docente.index',['registro' => $registro,'ciclo' => $ciclo,'planes'=>$planes]);
     }
 
-    public function aulas($id)
+    public function aulas(Request $request)
     {
         try 
         {
@@ -39,7 +45,8 @@ class CursoDocenteController extends Controller
                         ->join('grado as g','g.id','cg.grado_id')
                         ->select('a.id','g.nombre as aula', 's.nombre as seccion')
                         ->where('a.ciclo_escolar_id',$ciclo->id)
-                        ->where('cg.carrera_id',$id)
+                        ->where('cg.carrera_id',$request->get('carrera'))
+                        ->where('a.plan_id',$request->get('plan'))
                         ->get();
             
             return response()->json(['data' => $registro],200);

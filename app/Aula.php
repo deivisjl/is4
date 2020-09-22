@@ -9,7 +9,7 @@ class Aula extends Model
     protected $table = 'aula';
 
     protected $fillable = [
-        'id', 'carrera_grado_id','seccion_id','ciclo_escolar_id'
+        'id', 'carrera_grado_id','seccion_id','ciclo_escolar_id','plan_id'
     ];
 
     public function carrera_grado()

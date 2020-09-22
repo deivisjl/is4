@@ -22,6 +22,20 @@
                     <input name="_method" type="hidden" value="PUT">
                       @csrf
                       <div class="form-group">
+                        <label for="">Plan</label>
+                        <select name="plan" id="plan" class="form-control">
+                            <option value="0">-- Seleccione una opción --</option>
+                            @foreach($planes as $plan)
+                              <option value="{{ $plan->id }}" @if($plan->id == $aula->plan_id)selected = "selected" @endif>
+                                  {{ $plan->nombre }}
+                              </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('plan'))
+                              <p class="text-danger">{{ $errors->first('plan') }}</p>
+                        @endif
+                    </div>
+                      <div class="form-group">
                           <label for="">Grado</label>
                           <select name="carrera" id="carrera" class="form-control">
                               <option value="0">-- Seleccione una opción --</option>

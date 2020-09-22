@@ -42,14 +42,15 @@ class DocenteController extends Controller
         $registro = DB::table('users as u')
                         ->join('profesor_curso as pc','u.id','pc.usuario_id')
                         ->join('aula as a','pc.aula_id','a.id')
+                        ->join('plan as p','a.plan_id','p.id')
                         ->join('carrera_grado as cg','a.carrera_grado_id','cg.id')
                         ->join('carrera as c','cg.carrera_id','c.id')
                         ->join('grado as g','cg.grado_id','g.id')
                         ->join('seccion as s','a.seccion_id','s.id')
-                        ->select('a.id as aula_id',DB::raw('CONCAT(c.nombre,", ",g.nombre) as grado'),'s.nombre as seccion')
+                        ->select('a.id as aula_id',DB::raw('CONCAT(p.nombre,", ",c.nombre,", ",g.nombre) as grado'),'s.nombre as seccion')
                         ->where('pc.ciclo_escolar_id',$ciclo->id)
                         ->where('u.id',$id)
-                        ->groupBy('a.id','c.nombre','g.nombre','s.nombre')
+                        ->groupBy('a.id','c.nombre','p.nombre','g.nombre','s.nombre')
                         ->get();
 
         foreach ($registro as $key => $aula) 

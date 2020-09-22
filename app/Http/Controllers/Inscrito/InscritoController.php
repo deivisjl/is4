@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Inscrito;
 
+use App\Plan;
 use App\Inscrito;
 use App\CicloEscolar;
 use Illuminate\Http\Request;
@@ -19,15 +20,16 @@ class InscritoController extends Controller
     {
         $ciclo = CicloEscolar::where('activo',1)->first();
 
-        $aulas = DB::table('aula as a')
-                    ->join('carrera_grado as cg','a.carrera_grado_id','cg.id')
-                    ->join('carrera as c','cg.carrera_id','c.id')
-                    ->select('c.id','c.nombre')
-                    ->where('a.ciclo_escolar_id',$ciclo->id)
-                    ->groupBy('c.id','c.nombre')
-                    ->get();
+        $planes = Plan::all();
         
-        return view('inscrito.index',['aulas' => $aulas,'ciclo' => $ciclo]);
+        $aulas = DB::table('aula as a')
+                        ->join('carrera_grado as cg','a.carrera_grado_id','cg.id')
+                        ->join('carrera as c','cg.carrera_id','c.id')
+                        ->select(DB::raw('DISTINCT(cg.carrera_id) as id'),'c.nombre as nombre')
+                        ->where('a.ciclo_escolar_id',$ciclo->id)
+                        ->get();
+        
+        return view('inscrito.index',['aulas' => $aulas,'ciclo' => $ciclo, 'planes' => $planes]);
     }
 
     public function alumnos()

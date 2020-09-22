@@ -17,7 +17,7 @@
                   </div>
               <!-- /.card-header -->
               <div class="card-body">
-                  <curso-docente-component :registro="{{ $registro }}"></curso-docente-component>
+                  <curso-docente-component :registro="{{ $registro }}" :plans="{{ $planes }}"></curso-docente-component>
               </div>
               <!-- /.card-body -->
             </div>

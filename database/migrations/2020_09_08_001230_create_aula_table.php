@@ -16,11 +16,11 @@ class CreateAulaTable extends Migration
         Schema::create('aula', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('carrera_grado_id')->unsigned();
-            //$table->bigInteger('plan_id')->unsigned();
+            $table->bigInteger('plan_id')->unsigned();
             $table->bigInteger('seccion_id')->unsigned();
             $table->bigInteger('ciclo_escolar_id')->unsigned();
             $table->foreign('carrera_grado_id')->references('id')->on('carrera_grado');
-            //$table->foreign('plan_id')->references('id')->on('plan');
+            $table->foreign('plan_id')->references('id')->on('plan');
             $table->foreign('seccion_id')->references('id')->on('seccion');
             $table->foreign('ciclo_escolar_id')->references('id')->on('ciclo_escolar');
             $table->timestamps();

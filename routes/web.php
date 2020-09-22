@@ -56,6 +56,9 @@ Route::group(['middleware' =>['auth']],function(){
 
     /* Aulas */
     Route::resource('aulas','Aula\AulaController');
+    Route::get('aulas-detalle/{id}','Aula\AulaController@detalleAula');
+    Route::get('listar-alumnos-aula/{id}','Aula\AulaController@listarAlumnoAula');
+    Route::delete('eliminar-inscrito/{id}','Aula\AulaController@eliminarInscrito');
 
     /* Alumno */
     Route::resource('alumnos','Alumno\AlumnoController');
@@ -66,7 +69,7 @@ Route::group(['middleware' =>['auth']],function(){
 
     /* Curso docente */
     Route::get('curso-docente','Pensum\CursoDocenteController@index')->name('curso.docente');
-    Route::get('curso-docente-aulas/{id}','Pensum\CursoDocenteController@aulas');
+    Route::get('curso-docente-aulas','Pensum\CursoDocenteController@aulas');//refactorizado
     Route::get('curso-docente-pensum/{id}','Pensum\CursoDocenteController@cursos');
     Route::get('curso-docente-profesores/','Pensum\CursoDocenteController@profesores');
     Route::post('curso-docente','Pensum\CursoDocenteController@asignar');

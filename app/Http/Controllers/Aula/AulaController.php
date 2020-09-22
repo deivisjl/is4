@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Aula;
 
 use App\Aula;
+use App\Plan;
 use App\Seccion;
+use App\Inscrito;
 use App\CarreraGrado;
 use App\CicloEscolar;
 use Illuminate\Http\Request;
@@ -32,11 +34,13 @@ class AulaController extends Controller
      */
     public function create()
     {
+        $planes = Plan::all();
+        
         $carreras = CarreraGrado::all();
         
         $secciones = Seccion::all();
 
-        return view('aula.create',['carreras' => $carreras, 'secciones' => $secciones]);
+        return view('aula.create',['carreras' => $carreras, 'secciones' => $secciones, 'planes' => $planes]);
     }
 
     /**
@@ -48,6 +52,7 @@ class AulaController extends Controller
     public function store(Request $request)
     {
         $rules = [
+            'plan' => 'required|numeric|min:1',
             'carrera' => 'required|numeric|min:1',
             'seccion' => 'required|numeric|min:1',
         ];            
@@ -57,6 +62,7 @@ class AulaController extends Controller
         $ciclo = CicloEscolar::where('activo',1)->first();
 
         $aula = new Aula();
+        $aula->plan_id = $request->get('plan');
         $aula->carrera_grado_id = $request->get('carrera');
         $aula->seccion_id = $request->get('seccion');
         $aula->ciclo_escolar_id = $ciclo->id;
@@ -73,7 +79,7 @@ class AulaController extends Controller
      */
     public function show(Request $request)
     {
-        $ordenadores = array("a.id","g.nombre","s.nombre");
+        $ordenadores = array("a.id","p.nombre","g.nombre","s.nombre");
 
         $columna = $request['order'][0]["column"];
         
@@ -81,12 +87,13 @@ class AulaController extends Controller
 
         $ciclo = CicloEscolar::where('activo',1)->first();
 
-        $aulas = DB::table('aula as a')                
+        $aulas = DB::table('aula as a')
+                ->join('plan as p','a.plan_id','p.id')                
                 ->join('seccion as s','s.id','a.seccion_id')
                 ->join('carrera_grado as cg','cg.id','a.carrera_grado_id')
                 ->join('carrera as c','c.id','cg.carrera_id')
                 ->join('grado as g','g.id','cg.grado_id')
-                ->select('a.id',DB::raw('CONCAT(g.nombre,", ",c.nombre) as aula'), 's.nombre as seccion') 
+                ->select('a.id',DB::raw('CONCAT(g.nombre,", ",c.nombre) as aula'), 's.nombre as seccion','p.nombre as plan') 
                 ->where('a.ciclo_escolar_id',$ciclo->id)
                 ->where($ordenadores[$columna], 'LIKE', '%' . $criterio . '%')
                 ->orderBy($ordenadores[$columna], $request['order'][0]["dir"])
@@ -94,7 +101,8 @@ class AulaController extends Controller
                 ->take($request['length'])
                 ->get();
               
-        $count = DB::table('aula as a')                
+        $count = DB::table('aula as a')
+                ->join('plan as p','a.plan_id','p.id')                                
                 ->join('seccion as s','s.id','a.seccion_id')
                 ->join('carrera_grado as cg','cg.id','a.carrera_grado_id')
                 ->join('carrera as c','c.id','cg.carrera_id')
@@ -121,11 +129,13 @@ class AulaController extends Controller
      */
     public function edit(Aula $aula)
     {
+        $planes = Plan::all();
+
         $carreras = CarreraGrado::all();
         
         $secciones = Seccion::all();
 
-        return view('aula.edit',['carreras' => $carreras, 'secciones' => $secciones, 'aula' => $aula]);
+        return view('aula.edit',['carreras' => $carreras, 'secciones' => $secciones, 'aula' => $aula, 'planes' => $planes]);
     }
 
     /**
@@ -138,12 +148,14 @@ class AulaController extends Controller
     public function update(Request $request, Aula $aula)
     {
         $rules = [
+            'plan' => 'required|numeric|min:1',
             'carrera' => 'required|numeric|min:1',
             'seccion' => 'required|numeric|min:1',
         ];            
 
         $this->validate($request, $rules);        
 
+        $aula->plan_id = $request->get('plan');
         $aula->carrera_grado_id = $request->get('carrera');
         $aula->seccion_id = $request->get('seccion');
         $aula->save();
@@ -174,6 +186,63 @@ class AulaController extends Controller
                     return  response()->json(['error' => 'No se puede eliminar el registro porque está relacionado'],423);
                 }
             }
+            return response()->json(['error' => $ex->getMessage()],423);
+        }
+    }
+
+    public function detalleAula($aula)
+    {   
+        $ciclo = CicloEscolar::where('activo',1)->first();
+
+        $aulas = DB::table('aula as a')
+                ->join('plan as p','a.plan_id','p.id')                
+                ->join('seccion as s','s.id','a.seccion_id')
+                ->join('carrera_grado as cg','cg.id','a.carrera_grado_id')
+                ->join('carrera as c','c.id','cg.carrera_id')
+                ->join('grado as g','g.id','cg.grado_id')
+                ->select('a.id',DB::raw('CONCAT(g.nombre,", ",c.nombre) as aula'), 's.nombre as seccion','p.nombre as plan') 
+                ->where('a.ciclo_escolar_id',$ciclo->id)
+                ->where('a.id',$aula)
+                ->first();
+        
+        return view('aula.detalle',['aulas' => $aulas]);
+    }
+
+    public function listarAlumnoAula($id)
+    {
+        try 
+        {
+            $ciclo = CicloEscolar::where('activo',1)->first();
+
+            $registros = DB::table('aula as a')
+                        ->join('inscrito as i','i.aula_id','a.id')
+                        ->join('alumno as al','i.alumno_id','al.id')  
+                        ->join('persona as p', 'al.persona_id', '=', 'p.id')            
+                        ->select('i.id', DB::raw('CONCAT_WS(" ",p.primer_nombre," ",p.segundo_nombre," ",p.tercer_nombre) as nombres'),DB::raw('CONCAT_WS(" ",p.primer_apellido," ",p.segundo_apellido) as apellidos'),'al.sire_id') 
+                        ->where('a.ciclo_escolar_id',$ciclo->id)
+                        ->where('a.id',$id)
+                        ->orderBy('p.primer_nombre','asc')
+                        ->get();
+            
+            return response()->json(['data' => $registros],200);
+        } 
+        catch (\Exception $ex) 
+        {
+            return response()->json(['error' => $ex->getMessage()],423);
+        }
+    }
+
+    public function eliminarInscrito($id)
+    {
+        try 
+        {
+            $registro = Inscrito::findOrFail($id);
+            $registro->delete();
+            
+            return response()->json(['data' => 'Registro eliminado con éxito'],200);
+        } 
+        catch (\Exception $ex) 
+        {
             return response()->json(['error' => $ex->getMessage()],423);
         }
     }

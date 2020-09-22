@@ -3,26 +3,36 @@
 		<loading v-if="loading"></loading>
 		<div class="form-row align-items-center">
             <div class="col-auto my-1">
-				<label>Carrera</label>
+				<label>Plan</label>
 			</div>
 			<div class="col-auto my-1">				
+				<select name="plan" id="plan" v-model="plan" class="custom-select" @change="activar_opcion()" :disabled="asignado">
+                        <template v-for="item in planes">
+                            <option :value="item.id">{{ item.nombre }}</option>
+                        </template>
+                </select>
+			</div>
+            <div class="col-auto my-1" v-if="activar">
+				<label>Carrera</label>
+			</div>
+			<div class="col-auto my-1" v-if="activar">				
 				<select name="aula" id="aula" v-model="carrera" class="custom-select" @change="obtener_aulas()" :disabled="asignado">
                         <template v-for="item in carreras">
                             <option :value="item.id">{{ item.nombre }}</option>
                         </template>
                 </select>
 			</div>
-			<div class="col-auto my-1">
+			<div class="col-auto my-1" v-if="activar">
 				<label>Grado y sección</label>
 			</div>
-            <div class="col-auto my-1">
+            <div class="col-auto my-1" v-if="activar">
                 <select name="aula" id="aula" v-model="aula" class="custom-select" :disabled="asignado">
                     <template v-for="item in aulas">
                             <option :value="item.id">{{ item.aula }}, Sección {{ item.seccion }}</option>
                     </template>
                 </select>
             </div>
-			<div class="col-auto my-1" v-if="aula">
+			<div class="col-auto my-1" v-if="aula && activar">
 				<button type="button" class="btn btn-primary" @click.prevent="asignar()">{{ texto_boton }}</button>
 			</div>
 		</div>
@@ -73,15 +83,27 @@ export default {
             aula:'',
             alumnos:[],
             asignado:false,
+            activar:false,
+            planes:[],
+            plan:'',
         };
     },
     props:{
-        registro:{}
+        registro:{},
+        plans:{},
     },
     mounted(){
         this.carreras = this.registro
+        this.planes = this.plans
     },
     methods:{
+        activar_opcion()
+        {
+            this.activar = true
+            this.carrera = ''
+            this.aulas = []
+            this.aula = ''
+        },
         inscribir(data)
         {
             this.loading = true
@@ -104,37 +126,52 @@ export default {
                 })
         },
          obtener_aulas(){
-            this.aulas = []
-            this.aula = ''
-            this.loading = true
-
-            axios.get('/curso-docente-aulas/'+this.carrera)
-                .then(r=>{
-                    this.aulas = r.data.data
-                })
-                .catch(error =>{
-
-                })
-                .finally(() =>{
-                    this.loading = false
-                })
-        },
-        asignar()
-        {
-            if(this.asignado)
+            if(this.plan > 0)
             {
-                this.asignado = false
-                this.texto_boton = "Inscribir"
                 this.aulas = []
-                this.aula = ""
-                this.carrera = ""
-                this.alumnos = []
+                this.aula = ''
+                this.loading = true
+
+                axios.get('/curso-docente-aulas?carrera='+this.carrera+'&plan='+this.plan)
+                    .then(r=>{
+                        this.aulas = r.data.data
+                    })
+                    .catch(error =>{
+
+                    })
+                    .finally(() =>{
+                        this.loading = false
+                    })
             }
             else
             {
-                this.asignado = true
-                this.texto_boton = "Cambiar"
-                this.obtener_datos()
+                Toastr.warning('Hay campos sin seleccionar','Mensaje')
+            }
+        },
+        asignar()
+        {
+            if(this.plan > 0 && this.aula > 0){
+                
+                if(this.asignado)
+                {
+                    this.asignado = false
+                    this.texto_boton = "Inscribir"
+                    this.aulas = []
+                    this.aula = ""
+                    this.carrera = ""
+                    this.alumnos = []
+                    this.plan = ''
+                    this.activar = false
+                }
+                else
+                {
+                    this.asignado = true
+                    this.texto_boton = "Cambiar"
+                    this.obtener_datos()
+                }
+            }
+            else{
+                Toastr.warning('Existen opciones sin seleccionar','Mensaje')
             }
         },
         obtener_datos()
