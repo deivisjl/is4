@@ -32,6 +32,7 @@ Vue.component('curso-docente-component', require('./components/curso-docente/Cur
 Vue.component('aula-detalle-component', require('./components/aula/AulaInscritoComponent.vue').default);
 
 Vue.component('inscripcion-component', require('./components/inscrito/InscripcionComponent.vue').default);
+Vue.component('curso-profesor-component', require('./components/notas/CursoProfesorComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

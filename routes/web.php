@@ -16,11 +16,11 @@ Auth::routes(['register' => false, 'reset' => false]);
 
 Route::get('/logout','Auth\LoginController@logout');
 
-Route::group(['middleware' =>['auth']],function(){
+Route::get('/', 'HomeController@index')->name('home');
 
-    Route::get('/', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 
-    Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' =>['auth','digitador']],function(){
 
     /* Catalogos */
     Route::resource('/usuarios', 'Administrar\UsuarioController');
@@ -78,5 +78,13 @@ Route::group(['middleware' =>['auth']],function(){
     Route::get('inscripciones','Inscrito\InscritoController@index')->name('inscripciones.index');
     Route::get('inscripciones-alumnos','Inscrito\InscritoController@alumnos');
     Route::post('inscripciones','Inscrito\InscritoController@inscribir_alumnos');
+
+});
+
+Route::group(['middleware' =>['auth','profesor']],function(){
+    Route::resource('profesores','Profesor\ProfesorController');
+});
+
+Route::group(['middleware' =>['auth','administrador']],function(){
 
 });

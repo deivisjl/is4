@@ -10,6 +10,10 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const ADMINISTRADOR = 'ADMINISTRADOR';
+    const PROFESOR = 'PROFESOR';
+    const DIGITADOR = 'DIGITADOR';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -40,5 +44,25 @@ class User extends Authenticatable
     public function persona()
     {
         return $this->belongsTo(Persona::class);
+    }
+
+    public function rol()
+    {
+        return $this->belongsTo(Rol::class);
+    }
+
+    public function esAdministrador()
+    {
+        return strtoupper($this->rol->nombre) == User::ADMINISTRADOR;
+    }
+
+    public function esProfesor()
+    {
+        return strtoupper($this->rol->nombre) == User::PROFESOR;
+    }
+
+    public function esDigitador()
+    {
+        return strtoupper($this->rol->nombre) == User::DIGITADOR;
     }
 }

@@ -31,45 +31,59 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="collapse navbar-collapse order-3" id="navbarCollapse">
           <!-- Left navbar links -->
           <ul class="navbar-nav">
-            <li class="nav-item dropdown active">
-              <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Administrar</a>
-              <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                <li><a href="{{ route('roles.index') }}" class="dropdown-item">Roles</a></li>
-                <li><a href="{{ route('planes.index') }}" class="dropdown-item">Plan</a></li>
-                <li><a href="{{ route('carreras.index') }}" class="dropdown-item">Carreras </a></li>
-                <li><a href="{{ route('grados.index') }}" class="dropdown-item">Grados </a></li>
-                <li><a href="{{ route('secciones.index') }}" class="dropdown-item">Secciones </a></li>
-                <li><a href="{{ route('cursos.index') }}" class="dropdown-item">Cursos</a></li>
-                <li><a href="{{ route('horarios.index') }}" class="dropdown-item">Horarios</a></li>
-                <div class="dropdown-divider"></div>
-                <li><a href="{{ route('ciclo-escolar.index') }}" class="dropdown-item">Ciclo escolar</a></li>
-                <li><a href="{{ route('planes-horarios.index') }}" class="dropdown-item">Habilitar horarios</a></li>
-                <li><a href="{{ route('carrera-grado.index') }}" class="dropdown-item">Habilitar carreras</a></li>
-              </ul>
-            </li>
-            <li class="nav-item active">
-              <a href="{{ route('usuarios.index') }}" class="nav-link">Usuarios</a>
-            </li>
-            <li class="nav-item active">
-              <a href="{{ route('pensum.index') }}" class="nav-link">Pensum</a>
-            </li>
-            <li class="nav-item active">
-              <a href="{{ route('aulas.index') }}" class="nav-link">Aulas</a>
-            </li>
-            <li class="nav-item dropdown active">
-              <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Docentes</a>
-              <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                <li><a href="{{ route('docente.index') }}" class="dropdown-item">Listado de docentes</a></li>
-                <li><a href="{{ route('curso.docente') }}" class="dropdown-item">Asignar docentes</a></li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown active">
-              <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Alumnos</a>
-              <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                <li><a href="{{ route('alumnos.index') }}" class="dropdown-item">Listado de alumnos</a></li>
-                <li><a href="{{ route('inscripciones.index') }}" class="dropdown-item">Inscripciones</a></li>
-              </ul>
-            </li>
+            @if(Auth::user()->esDigitador() || Auth::user()->esAdministrador())
+              <li class="nav-item dropdown active">
+                <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Administrar</a>
+                <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                  <li><a href="{{ route('roles.index') }}" class="dropdown-item">Roles</a></li>
+                  <li><a href="{{ route('planes.index') }}" class="dropdown-item">Plan</a></li>
+                  <li><a href="{{ route('carreras.index') }}" class="dropdown-item">Carreras </a></li>
+                  <li><a href="{{ route('grados.index') }}" class="dropdown-item">Grados </a></li>
+                  <li><a href="{{ route('secciones.index') }}" class="dropdown-item">Secciones </a></li>
+                  <li><a href="{{ route('cursos.index') }}" class="dropdown-item">Cursos</a></li>
+                  <li><a href="{{ route('horarios.index') }}" class="dropdown-item">Horarios</a></li>
+                  <div class="dropdown-divider"></div>
+                  <li><a href="{{ route('ciclo-escolar.index') }}" class="dropdown-item">Ciclo escolar</a></li>
+                  <li><a href="{{ route('planes-horarios.index') }}" class="dropdown-item">Habilitar horarios</a></li>
+                  <li><a href="{{ route('carrera-grado.index') }}" class="dropdown-item">Habilitar carreras</a></li>
+                </ul>
+              </li>
+              <li class="nav-item active">
+                <a href="{{ route('usuarios.index') }}" class="nav-link">Usuarios</a>
+              </li>
+              <li class="nav-item active">
+                <a href="{{ route('pensum.index') }}" class="nav-link">Pensum</a>
+              </li>
+              <li class="nav-item active">
+                <a href="{{ route('aulas.index') }}" class="nav-link">Aulas</a>
+              </li>
+              <li class="nav-item dropdown active">
+                <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Docentes</a>
+                <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                  <li><a href="{{ route('docente.index') }}" class="dropdown-item">Listado de docentes</a></li>
+                  <li><a href="{{ route('curso.docente') }}" class="dropdown-item">Asignar docentes</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown active">
+                <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Alumnos</a>
+                <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                  <li><a href="{{ route('alumnos.index') }}" class="dropdown-item">Listado de alumnos</a></li>
+                  <li><a href="{{ route('inscripciones.index') }}" class="dropdown-item">Inscripciones</a></li>
+                </ul>
+              </li>
+            @endif 
+            @if(Auth::user()->esAdministrador())
+            
+            @endif
+            @if(Auth::user()->esProfesor())
+              <li class="nav-item active">
+                <a href="{{ route('profesores.index') }}" class="nav-link">Aulas</a>
+              </li>
+              {{-- <li class="nav-item active">
+                <a href="#" class="nav-link">Reporte de notas</a>
+              </li> --}}
+            @endif  
+            
             {{-- <li class="nav-item active">
               <a href="{{ route('alumnos.index') }}" class="nav-link">Pagos</a>
             </li>
