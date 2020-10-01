@@ -9,7 +9,8 @@
                             <tbody>
                                 <tr v-for="curso in cursos">
                                     <td>{{ curso.nombre }}</td>
-                                    <td><a href="" class="btn-success btn-sm float-right" @click.prevent="calificar(curso)"><i class="fas fa-edit"></i> Calificar</a></td>
+                                    <td style="text-align:right; width:20%"><a href="" class="btn-success btn-sm float-right" @click.prevent="calificar(curso)"><i class="fas fa-edit"></i> Calificar</a></td>
+                                    <td style="width:20%"><a href="" class="btn-primary btn-sm float-right" @click.prevent="reporte(curso)"><i class="fas fa-address-book"></i> Reporte</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -47,6 +48,34 @@ export default {
         events.$off('ocultar_modal', this.event_ocultar_modal)
     },
     methods:{
+        reporte(data)
+        {
+            this.loading = true
+
+            axios({
+                url:'/alumnos-curso-reporte/' + data.id,
+                method:'GET',
+                responseType:'blob'
+            })
+            .then((r) =>{
+                 const blob = new Blob([r.data], {type: r.data.type});
+                  const url = window.URL.createObjectURL(blob);
+                  const link = document.createElement('a');
+                  link.href = url;
+                  let fileName = 'calificaciones.pdf';
+                  link.setAttribute('download', fileName);
+                  document.body.appendChild(link);
+                  link.click();
+                  link.remove();
+                  window.URL.revokeObjectURL(url);
+            })
+            .catch((error) => {
+                Toast.error(error,'Mensaje');
+            })
+            .finally(()=>{
+                this.loading = false
+            })
+        },
         calificar(data)
         {
             this.curso_cargar = data

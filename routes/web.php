@@ -87,6 +87,7 @@ Route::group(['middleware' =>['auth','profesor']],function(){
     Route::post('bimestre-validar','Nota\NotaController@validarBimestre');
     Route::get('alumnos-curso/{id}','Nota\NotaController@obtenerAlumnos');
     Route::post('alumnos-curso-nota','Nota\NotaController@notaAlumnos');
+    Route::get('alumnos-curso-reporte/{id}','Nota\NotaController@reporteNotaAlumnos');
 });
 
 Route::group(['middleware' =>['auth','administrador']],function(){
