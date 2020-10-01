@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Notas del curso</title>
+    <title>Notas de grado</title>
     <style>
         .table-custom{
             width: 100%;
@@ -37,12 +37,12 @@
     <table class="table-custom">
         <tbody>
             <tr>
-                <td><strong>Plan:</strong> {{ $curso->plan}}</td>
-                <td><strong>Carrera: </strong>{{ $curso->carrera }}</td>
+                <td><strong>Alumno:</strong> {{ $inscrito->alumno->persona->primer_nombre }} {{ $inscrito->alumno->persona->segundo_nombre }} {{ $inscrito->alumno->persona->tercer_nombre }} {{ $inscrito->alumno->persona->primer_apellido }} {{ $inscrito->alumno->persona->segundo_apellido }}</td>
+                <td><strong>Plan:</strong> {{ $inscrito->aula->plan->nombre }}</td>
             </tr>
             <tr>
-                <td><strong>Grado: </strong>{{ $curso->grado }}, sección {{ $curso->seccion }}</td>
-                <td><strong>Curso: </strong>{{ $curso->nombre }}</td>
+                <td><strong>Carrera: </strong>{{ $inscrito->aula->carrera_grado->carrera->nombre }}</td>
+                <td><strong>Grado: </strong>{{ $inscrito->aula->carrera_grado->grado->nombre }}, sección {{ $inscrito->aula->seccion->nombre }}</td>
             </tr>
         </tbody>
     </table>
@@ -50,7 +50,7 @@
         <thead>
             <tr>
                 <th>No.</th>
-                <th>Alumno</th>
+                <th>Curso</th>
                 <th>Primer bimestre</th>
                 <th>Segundo bimestre</th>
                 <th>Tercer bimestre</th>
@@ -59,7 +59,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($datos['alumno'] as $index => $item)
+            @foreach ($pts as $index => $item)
                 <tr class="text-center">
                     <td>{{ $index + 1 }}</td>
                     <td style="text-align: left;">{{ $item['nombre'] }}</td>

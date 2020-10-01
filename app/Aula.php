@@ -31,4 +31,9 @@ class Aula extends Model
     {
         return $this->hasMany(ProfesorCurso::class);
     }
+
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
+    }
 }

@@ -71,6 +71,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <li><a href="{{ route('inscripciones.index') }}" class="dropdown-item">Inscripciones</a></li>
                 </ul>
               </li>
+              <li class="nav-item active">
+                <a href="#" class="nav-link">Pagos</a>
+              </li>
+              <li class="nav-item dropdown active">
+                <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Reportes</a>
+                <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                  <li><a href="{{ route('notas.index') }}" class="dropdown-item">Impresión de notas</a></li>
+                </ul>
+              </li>
             @endif 
             @if(Auth::user()->esAdministrador())
             

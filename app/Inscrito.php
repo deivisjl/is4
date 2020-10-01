@@ -16,4 +16,14 @@ class Inscrito extends Model
         'promovido',
         'repitente'
     ];
+
+    public function aula()
+    {
+        return $this->belongsTo(Aula::class);
+    }
+
+    public function alumno()
+    {
+        return $this->belongsTo(Alumno::class);
+    }
 }

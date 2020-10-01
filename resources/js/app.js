@@ -37,6 +37,8 @@ Vue.component('aula-detalle-component', require('./components/aula/AulaInscritoC
 Vue.component('inscripcion-component', require('./components/inscrito/InscripcionComponent.vue').default);
 Vue.component('curso-profesor-component', require('./components/notas/CursoProfesorComponent.vue').default);
 
+Vue.component('nota-aula-component', require('./components/reporte/notas/NotaAulaComponent.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

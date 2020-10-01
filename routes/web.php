@@ -79,6 +79,11 @@ Route::group(['middleware' =>['auth','digitador']],function(){
     Route::get('inscripciones-alumnos','Inscrito\InscritoController@alumnos');
     Route::post('inscripciones','Inscrito\InscritoController@inscribir_alumnos');
 
+    /* Reportes */
+    Route::get('reporte-notas','Reporte\ReporteController@notas')->name('notas.index');
+    Route::get('reporte-notas-alumnos/{id}','Reporte\ReporteController@detalleAula');
+    Route::get('reporte-notas-imprimir/{id}','Reporte\ReporteController@imprimirNotas');
+
 });
 
 Route::group(['middleware' =>['auth','profesor']],function(){
