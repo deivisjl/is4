@@ -243,6 +243,13 @@ class AulaController extends Controller
         } 
         catch (\Exception $ex) 
         {
+            if ($ex instanceof QueryException) {
+                $codigo = $ex->errorInfo[1];
+    
+                if ($codigo == 1451) {
+                    return  response()->json(['error' => 'No se puede eliminar el registro porque está relacionado'],423);
+                }
+            }
             return response()->json(['error' => $ex->getMessage()],423);
         }
     }

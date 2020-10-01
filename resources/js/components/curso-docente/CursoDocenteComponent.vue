@@ -36,6 +36,13 @@
 				<button type="button" class="btn btn-primary" @click.prevent="asignar()">{{ texto_boton }}</button>
 			</div>
 		</div>
+        <div class="row" v-if="cursos.length < 1 && asignado && aula">
+            <div class="col-md-6 offset-md-3">
+                <div class="callout callout-info">
+                    <h5>No hay pensum habilitado para esta aula</h5>
+                </div>
+            </div>
+        </div>
         <div class="dropdown-divider" v-if="cursos.length > 0"></div>
         <div class="row">
             <template v-for="(item, key) in cursos">

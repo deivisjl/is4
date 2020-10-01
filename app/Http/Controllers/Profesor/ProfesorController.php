@@ -85,7 +85,7 @@ class ProfesorController extends Controller
         $registros = DB::table('profesor_curso as pc')
                         ->join('pensum as p','pc.pensum_id','p.id')
                         ->join('curso as c','p.curso_id','c.id')    
-                        ->select('pc.id','c.nombre')
+                        ->select('pc.id','pc.aula_id','pc.pensum_id','c.nombre')
                         ->where('pc.aula_id',$id)
                         ->where('pc.usuario_id',Auth::user()->id)
                         ->where('pc.ciclo_escolar_id',$ciclo->id)  

@@ -83,6 +83,10 @@ Route::group(['middleware' =>['auth','digitador']],function(){
 
 Route::group(['middleware' =>['auth','profesor']],function(){
     Route::resource('profesores','Profesor\ProfesorController');
+    Route::get('bimestres','Nota\NotaController@bimestre');
+    Route::post('bimestre-validar','Nota\NotaController@validarBimestre');
+    Route::get('alumnos-curso/{id}','Nota\NotaController@obtenerAlumnos');
+    Route::post('alumnos-curso-nota','Nota\NotaController@notaAlumnos');
 });
 
 Route::group(['middleware' =>['auth','administrador']],function(){

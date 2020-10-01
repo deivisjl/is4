@@ -19,9 +19,11 @@ class CreateNotaTable extends Migration
             $table->bigInteger('inscrito_id')->unsigned();
             $table->bigInteger('bimestre_id')->unsigned();
             $table->integer('nota')->default(0);
+            $table->bigInteger('ciclo_escolar_id')->unsigned();
             $table->foreign('pensum_id')->references('id')->on('pensum');
             $table->foreign('inscrito_id')->references('id')->on('inscrito');
             $table->foreign('bimestre_id')->references('id')->on('bimestre');
+            $table->foreign('ciclo_escolar_id')->references('id')->on('ciclo_escolar');
             $table->timestamps();
         });
     }

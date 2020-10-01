@@ -14,6 +14,9 @@ window.Toastr = require('toastr');
 
 require('./bootstrap');
 
+window.events = new Vue();
+
+Vue.prototype.$eventHub = new Vue(); // Global event bus
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
