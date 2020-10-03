@@ -72,7 +72,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </ul>
               </li>
               <li class="nav-item active">
-                <a href="#" class="nav-link">Pagos</a>
+                <a href="{{ route('pagos.index') }}" class="nav-link">Pagos</a>
               </li>
               <li class="nav-item dropdown active">
                 <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Reportes</a>

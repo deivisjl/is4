@@ -24,7 +24,7 @@ class DocenteController extends Controller
                         ->join('rol as r','r.id','u.rol_id')
                         ->join('persona as p','u.persona_id','p.id')
                         ->join('profesor_curso as pc','u.id','pc.usuario_id')
-                        ->select(DB::raw('COUNT(pc.pensum_id) as cursos'),'u.id',DB::raw('CONCAT_WS("",p.primer_nombre,"",p.segundo_nombre,"",p.tercer_nombre," ",p.primer_apellido,"",p.segundo_apellido) as nombre'))
+                        ->select(DB::raw('COUNT(pc.pensum_id) as cursos'),'u.id',DB::raw('CONCAT_WS(" ",p.primer_nombre,"",p.segundo_nombre,"",p.tercer_nombre," ",p.primer_apellido,"",p.segundo_apellido) as nombre'))
                         ->where(DB::raw('LOWER(r.nombre)'), $rol)
                         ->where('pc.ciclo_escolar_id',$ciclo->id)
                         ->groupBy('u.id','p.primer_nombre','p.segundo_nombre','p.tercer_nombre','p.primer_apellido','p.segundo_apellido')

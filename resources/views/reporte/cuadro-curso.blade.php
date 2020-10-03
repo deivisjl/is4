@@ -64,28 +64,28 @@
                     <td>{{ $index + 1 }}</td>
                     <td style="text-align: left;">{{ $item['nombre'] }}</td>
                     <td>
-                        @if($item['bimestre_1'])
+                        @if(isset($item['bimestre_1']))
                             {{ $item['bimestre_1'] }}
                         @else
                             N/A
                         @endif
                     </td>
                     <td>
-                        @if($item['bimestre_2'])
+                        @if(isset($item['bimestre_2']))
                             {{ $item['bimestre_2'] }}
                         @else
                             N/A
                         @endif
                     </td>
                     <td>
-                        @if($item['bimestre_3'])
+                        @if(isset($item['bimestre_3']))
                             {{ $item['bimestre_3'] }}
                         @else
                             N/A
                         @endif
                     </td>
                     <td>
-                        @if($item['bimestre_4'])
+                        @if(isset($item['bimestre_4']))
                             {{ $item['bimestre_4'] }}
                         @else
                             N/A

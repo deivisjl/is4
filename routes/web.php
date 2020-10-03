@@ -79,6 +79,11 @@ Route::group(['middleware' =>['auth','digitador']],function(){
     Route::get('inscripciones-alumnos','Inscrito\InscritoController@alumnos');
     Route::post('inscripciones','Inscrito\InscritoController@inscribir_alumnos');
 
+    /* Pagos */
+    Route::resource('pagos','Pago\PagoController',['only'=>['index','show']]);
+    Route::get('pagos-historial/{id}','Pago\PagoController@historial');
+    Route::get('pagos-historial-detalle/{request}','Pago\PagoController@detalleHistorial');
+
     /* Reportes */
     Route::get('reporte-notas','Reporte\ReporteController@notas')->name('notas.index');
     Route::get('reporte-notas-alumnos/{id}','Reporte\ReporteController@detalleAula');
