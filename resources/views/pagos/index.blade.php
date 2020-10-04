@@ -8,8 +8,12 @@
             <!-- contenedor -->
             <div class="col-md-10 offset-md-1">
                 <div class="card card-default">
-                  <div class="card-header">
+                  <div class="card-header-custom">
                       <h5 class="float-left">Listado general de alumnos</h5>
+                      <ol class="breadcrumb-custom float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>                        
+                        <li class="breadcrumb-item active">Pagos</li>
+                      </ol>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">
@@ -79,7 +83,7 @@
             var data = table.fnGetData($(this).parents("tr"));
           
           var id = data.id;
-           //window.location.href = "/pagos-historial/" + id ;
+          window.location.href = "/pagos-registrar/" + id ;
         });
       }
 </script>

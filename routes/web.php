@@ -83,6 +83,9 @@ Route::group(['middleware' =>['auth','digitador']],function(){
     Route::resource('pagos','Pago\PagoController',['only'=>['index','show']]);
     Route::get('pagos-historial/{id}','Pago\PagoController@historial');
     Route::get('pagos-historial-detalle/{request}','Pago\PagoController@detalleHistorial');
+    Route::get('pagos-registrar/{id}','Pago\PagoController@registrarPago')->name('registrar.pago');
+    Route::get('pagos-historial-meses/{id}','Pago\PagoController@historialMeses');
+    Route::post('pagos-registrar','Pago\PagoController@pagar');
 
     /* Reportes */
     Route::get('reporte-notas','Reporte\ReporteController@notas')->name('notas.index');

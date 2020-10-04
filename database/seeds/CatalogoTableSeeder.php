@@ -1,5 +1,6 @@
 <?php
 
+use App\Mes;
 use App\Plan;
 use App\Grado;
 use App\Carrera;
@@ -56,6 +57,21 @@ class CatalogoTableSeeder extends Seeder
             ['nombre' => 2023, 'activo' => 0],
             ['nombre' => 2024, 'activo' => 0],
             ['nombre' => 2025, 'activo' => 0],
+        ]);
+
+        Mes::insert([
+            ['nombre' => 'Enero'],
+            ['nombre' => 'Febrero'],
+            ['nombre' => 'Marzo'],
+            ['nombre' => 'Abril'],
+            ['nombre' => 'Mayo'],
+            ['nombre' => 'Junio'],
+            ['nombre' => 'Julio'],
+            ['nombre' => 'Agosto'],
+            ['nombre' => 'Septiembre'],
+            ['nombre' => 'Octubre'],
+            ['nombre' => 'Noviembre'],
+            ['nombre' => 'Diciembre'],
         ]);
     }
 }

@@ -8,9 +8,14 @@
             <!-- contenedor -->
             <div class="col-md-8 offset-md-2">
                 <div class="card card-default">
-                  <div class="card-header">
+                  <div class="card-header-custom">
                       <h5 class="float-left">Historial de pagos de <strong>{{ $inscrito->alumno->persona->primer_nombre }} {{ $inscrito->alumno->persona->segundo_nombre }} {{ $inscrito->alumno->persona->tercer_nombre }} {{ $inscrito->alumno->persona->primer_apellido }} {{ $inscrito->alumno->persona->segundo_apellido }}</strong></h5>
                       <input type="hidden" name="registro" id="registro" value="{{ $inscrito->id }}">
+                      <ol class="breadcrumb-custom float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('pagos.index') }}">Pagos</a></li>
+                        <li class="breadcrumb-item active">Historial</li>
+                      </ol>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">

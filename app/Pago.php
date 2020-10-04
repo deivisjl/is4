@@ -15,4 +15,14 @@ class Pago extends Model
             'ciclo_escolar_id',
             'monto'
     ];
+
+    public function ciclo_escolar()
+    {
+        return $this->belongsTo(CicloEscolar::class);
+    }
+
+    public function mes()
+    {
+        return $this->belongsTo(Mes::class);
+    }
 }

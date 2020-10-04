@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Pago;
 
+use App\Mes;
 use App\Pago;
 use App\Inscrito;
+use Carbon\Carbon;
 use App\CicloEscolar;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -124,5 +127,76 @@ class PagoController extends Controller
         );
 
         return response()->json($data, 200);
+   }
+
+   public function registrarPago($id)
+   {
+        $inscrito = Inscrito::findOrFail($id);
+
+        return view('pagos.pago',['inscrito' => $inscrito]);
+   }
+
+   public function historialMeses($id)
+   {
+        try 
+        {
+                $ciclo = CicloEscolar::where('activo','=',1)->first();
+
+                $meses = Mes::all();
+                
+                $mes_pagado = Pago::where('ciclo_escolar_id','=',$ciclo->id)
+                                        ->where('inscrito_id','=',$id)
+                                        ->get(['mes_id'])
+                                        ->toArray();
+
+                $pagar = DB::table('mes')
+                        ->select('id','nombre')
+                        ->whereNotIn('id',$mes_pagado)
+                        ->get();        
+                
+                return response()->json(['data' => $pagar],200);
+        } 
+        catch (\Exception $ex) 
+        {
+                return response()->json(['error' => $ex->getMessage()],423);
+        }
+   }
+
+   public function pagar(Request $request)
+   {
+        $rules = [
+             'mes'=>'required|numeric',
+             'monto'=>'required|numeric',
+             'inscrito' => 'required|numeric',   
+        ];
+
+        $this->validate($request, $rules);
+
+        $ciclo = CicloEscolar::where('activo','=',1)->first();
+
+        try 
+        {
+             return DB::transaction(function () use($request, $ciclo){
+                
+                $pago = new Pago();
+                $pago->inscrito_id = $request->get('inscrito');
+                $pago->mes_id = $request->get('mes');
+                $pago->monto = $request->get('monto');
+                $pago->ciclo_escolar_id = $ciclo->id;
+                $pago->save();
+
+                $inscrito = Inscrito::findOrFail($pago->inscrito_id);
+
+                $fecha = Carbon::now()->format('d-m-Y');
+
+                $boleta = \PDF::loadView('pagos.pago-imprimir',['inscrito' => $inscrito, 'pago' => $pago, 'fecha' => $fecha])->setPaper('half-letter','landscape');
+                        
+                return $boleta->download('boleta_pago_'.$fecha.'.pdf');
+             });
+        } 
+        catch (\Exception $ex) 
+        {
+             return response()->json(['data' => $ex->getMessage()]);
+        }
    }
 }
