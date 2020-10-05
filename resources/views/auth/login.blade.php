@@ -16,14 +16,13 @@
 </head>
 <body class="hold-transition login-page text-sm">
 <div class="login-box">
-  <div class="login-logo">
-    <a href="/"><img src="{{ asset('img/logo-azul.png') }}" alt="AdminLTE Logo" class="brand-image" style="height: 76px;"></a>
-  </div>
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Identifícate</p>
-
+      <p class="text-center"><strong>Identificate</strong></p>
+      <img src="{{ asset('img/logo-oficial.png') }}" alt="logo" style="display: block; height: 90px; margin: 0 auto;">
+      <div style="margin-bottom: 20px;"></div>
+      
       <form  action="{{ route('login') }}" method="post" autocomplete="off">
         @csrf
         <div class="input-group mb-3">
@@ -53,9 +52,9 @@
         </div>
       </form>
 
-      <p class="mb-1">
+      {{-- <p class="mb-1">
         <a href="#">Olvidó su contraseña?</a>
-      </p>
+      </p> --}}
     </div>
     <!-- /.login-card-body -->
   </div>
