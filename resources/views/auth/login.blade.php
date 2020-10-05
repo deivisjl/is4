@@ -16,11 +16,12 @@
 </head>
 <body class="hold-transition login-page text-sm">
 <div class="login-box">
+  <img src="{{ asset('img/logo-azul.png') }}" alt="logo" style="display: block; height: 90px; margin: 0 auto;">
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
       <p class="text-center"><strong>Identificate</strong></p>
-      <img src="{{ asset('img/logo-oficial.png') }}" alt="logo" style="display: block; height: 90px; margin: 0 auto;">
+      
       <div style="margin-bottom: 20px;"></div>
       
       <form  action="{{ route('login') }}" method="post" autocomplete="off">
