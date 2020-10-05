@@ -15,6 +15,9 @@ window.Toastr = require('toastr');
 require('./bootstrap');
 
 import VeeValidate from 'vee-validate';
+import ChartKick from 'vue-chartkick';
+import Chart from 'chart.js';
+
 
 const VueValidationEs = require('vee-validate/dist/locale/es');
 
@@ -29,6 +32,7 @@ const config = {
 };
 
 Vue.use(VeeValidate, config);
+Vue.use(ChartKick.use(Chart))
 
 window.events = new Vue();
 
@@ -58,6 +62,13 @@ Vue.component('curso-profesor-component', require('./components/notas/CursoProfe
 Vue.component('nota-aula-component', require('./components/reporte/notas/NotaAulaComponent.vue').default);
 
 Vue.component('pago-component', require('./components/pagos/PagoComponent.vue').default);
+
+Vue.component('ingreso-carrera-component',require('./components/graficos/IngresoCarreraComponent.vue').default);
+Vue.component('ingreso-mes-component',require('./components/graficos/IngresoMesComponent.vue').default);
+
+Vue.component('profesor-curso-component',require('./components/graficos/ProfesorCursoComponent.vue').default);
+Vue.component('alumno-carrera-component',require('./components/graficos/AlumnoCarreraComponent.vue').default);
+Vue.component('inscrito-genero-component',require('./components/graficos/InscritoGeneroComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

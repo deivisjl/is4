@@ -78,6 +78,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Reportes</a>
                 <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                   <li><a href="{{ route('notas.index') }}" class="dropdown-item">Impresión de notas</a></li>
+                  @if(Auth::user()->esAdministrador())
+                    <li><a href="{{ route('grafico.index') }}" class="dropdown-item">Gráficos de ingresos</a></li>
+                    <li><a href="{{ route('alumno.index') }}" class="dropdown-item">Gráficos académicos</a></li>
+                  @endif
                 </ul>
               </li>
             @endif 

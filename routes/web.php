@@ -103,6 +103,15 @@ Route::group(['middleware' =>['auth','profesor']],function(){
     Route::get('alumnos-curso-reporte/{id}','Nota\NotaController@reporteNotaAlumnos');
 });
 
-Route::group(['middleware' =>['auth','administrador']],function(){
+Route::group(['middleware' =>['auth','admin']],function(){
 
+    /* Graficas */
+    Route::get('graficos-ingresos','Reporte\GraficaController@index')->name('grafico.index');
+    Route::get('grafico-ingreso-mes','Reporte\GraficaController@ingresoMes');
+    Route::get('grafico-ingreso-carrera','Reporte\GraficaController@ingresoCarrera');
+
+    Route::get('graficos-academicos','Reporte\GraficaController@indexAcademico')->name('alumno.index');
+    Route::get('cursos-profesor','Reporte\GraficaController@cursoProfesor');
+    Route::get('alumnos-carrera','Reporte\GraficaController@alumnoCarrera');
+    Route::get('alumnos-genero','Reporte\GraficaController@inscritoGenero');
 });
