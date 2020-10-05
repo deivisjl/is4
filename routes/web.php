@@ -20,6 +20,11 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('/usuario-credencial','Administrar\UsuarioController@cambiarCredencial');
+    Route::post('/usuario-credencial','Administrar\UsuarioController@guardarNuevaCredencial');
+});
+
 Route::group(['middleware' =>['auth','digitador']],function(){
 
     /* Catalogos */

@@ -117,6 +117,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <span class="dropdown-header">{{ Auth::user()->persona->primer_nombre}} {{ Auth::user()->persona->primer_apellido}}</span>
               <div class="dropdown-divider"></div>
               {{-- <div class="dropdown-divider"></div> --}}
+              <a href="/usuario-credencial" class="dropdown-item">
+                <i class="fas fa-key mr-2"></i> Cambiar contraseña
+              </a>
               <a href="/logout" class="dropdown-item">
                 <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
               </a>

@@ -22,6 +22,7 @@
                 <table id="listar" class="table table-striped table-bordered table-hover">
                       <thead>
                         <tr>
+                          <th>Id</th>
                           <th>Correo electrónico</th>                   
                           <th>Usuario</th>
                           <th>Rol</th>
@@ -58,6 +59,7 @@
           },
           
           "columns":[
+              {'data': 'id', 'visible':false},
               {'data': 'email'},
               {'data': 'nombre'},
               {'data': 'rol'},
@@ -67,6 +69,54 @@
           "language": idioma_spanish,
           "order": [[ 0, "asc" ]]
         });
+
+        obtener_data_editar("#listar tbody",table);
     }
+
+    var obtener_data_editar = function(tbody,table){
+         $(tbody).on("click","a.editar",function(e){
+            e.preventDefault();
+            var data = table.fnGetData($(this).parents("tr"));
+          
+          var id = data.id;
+          window.location.href = "/usuarios/" + id + "/edit";
+        });
+
+         $(tbody).on("click","a.borrar",function(e){
+             e.preventDefault();
+             var data = table.fnGetData($(this).parents("tr"));
+            
+            var id = data.id;
+
+             Swal.fire({
+                  title: '¿Está seguro de eliminar este registro?',
+                  //text: 'Confirmar',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Aceptar',
+                  cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                   if (result.value) {
+                      axios.delete('/usuarios/'+id)
+                          .then(response => {
+                              Toastr.success(response.data.data,'Mensaje')
+                              table._fnAjaxUpdate()
+                              
+                          })
+                          .catch(error => {
+                              if (error.response.status === 423) {
+                                  Toastr.error(error.response.data.error,'Error'); 
+                              }else{
+                                  Toastr.error('Ocurrió un error: ' + error,'Error');
+                              }
+                          });
+                   }
+                    
+                });
+             
+          });
+      }
 </script>
 @endsection

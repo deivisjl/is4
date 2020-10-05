@@ -8,6 +8,8 @@ use App\Persona;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
 
 class UsuarioController extends Controller
 {
@@ -79,7 +81,7 @@ class UsuarioController extends Controller
             $usuario->password = bcrypt($request->get('password'));
             $usuario->save();
 
-            return redirect()->route('usuarios.index');
+            return redirect()->route('usuarios.index')->with(['mensaje' => 'Registro exitoso']);
 
         });
     }
@@ -102,7 +104,7 @@ class UsuarioController extends Controller
         $usuarios = DB::table('persona')
                 ->join('users','users.persona_id','=','persona.id')
                  ->join('rol','users.rol_id','=','rol.id')
-                ->select(DB::raw('CONCAT_WS(" ",persona.primer_nombre," ",persona.segundo_nombre," ",persona.tercer_nombre," ",persona.primer_apellido," ",persona.segundo_apellido) as nombre'),'rol.nombre as rol','users.dpi','users.email') 
+                ->select('users.id',DB::raw('CONCAT_WS(" ",persona.primer_nombre," ",persona.segundo_nombre," ",persona.tercer_nombre," ",persona.primer_apellido," ",persona.segundo_apellido) as nombre'),'rol.nombre as rol','users.dpi','users.email') 
                 ->where($ordenadores[$columna], 'LIKE', '%' . $criterio . '%')
                 ->orderBy($ordenadores[$columna], $request['order'][0]["dir"])
                 ->skip($request['start'])
@@ -133,7 +135,10 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
-        //
+        $usuario = User::findOrFail($id);
+        $roles = Rol::all();
+
+        return view('administrar.usuarios.edit',['usuario'=> $usuario, 'roles' => $roles]);
     }
 
     /**
@@ -145,7 +150,43 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'primer_nombre' => 'required|string',
+            'segundo_nombre' => 'nullable|string',
+            'tercer_nombre' => 'nullable|string',
+            'primer_apellido' => 'required|string',
+            'segundo_apellido' => 'nullable|string',
+            'genero' => 'required|string|max:1',
+            'direccion' => 'required|string',
+            'rol' => 'required|numeric|min:1',
+            'dpi' => 'required|numeric',
+            'email' => 'required|email|unique:users,email,'.$id,
+        ];
+
+        $this->validate($request, $rules);
+
+        return DB::transaction(function() use($request, $id) {
+
+            $usuario = User::findOrfail($id);
+            $usuario->rol_id = $request->get('rol');
+            $usuario->dpi = $request->get('dpi');
+            $usuario->email = $request->get('email');
+            $usuario->save();
+
+            $persona = Persona::findOrfail($usuario->persona_id);
+            $persona->primer_nombre = $request->get('primer_nombre');
+            $persona->segundo_nombre = $request->get('segundo_nombre');
+            $persona->tercer_nombre = $request->get('tercer_nombre');
+            $persona->primer_apellido = $request->get('primer_apellido');
+            $persona->segundo_apellido = $request->get('segundo_apellido');
+            $persona->genero = $request->get('genero');
+            $persona->direccion = $request->get('direccion');
+            $persona->save();
+
+            return redirect()->route('usuarios.index')->with(['mensaje' => 'Actualización exitoso']);
+
+        });
+
     }
 
     /**
@@ -156,6 +197,63 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try 
+        {
+            if($id == Auth::user()->id)
+            {
+                throw new \Exception("No se puede eliminar el usuario en sesión", 1);
+                
+            }
+            
+            return DB::transaction(function () use($id){
+                
+                $usuario = User::findOrFail($id);
+                $usuario->delete();
+
+                $persona = Persona::findOrFail($usuario->persona_id);
+                $persona->delete();
+
+                return response()->json(['data' => 'El registro fue borrado con éxito'],200);
+            });
+        } 
+        catch (\Exception $ex) 
+        {
+            if ($ex instanceof QueryException) {
+                $codigo = $ex->errorInfo[1];
+    
+                if ($codigo == 1451) {
+                    return  response()->json(['error' => 'No se puede eliminar el registro porque está relacionado'],423);
+                }
+            }
+            return response()->json(['error' => $ex->getMessage()],423);
+        }
+    }
+
+    public function cambiarCredencial()
+    {
+        return view('administrar.usuarios.cambiar-credencial');
+    }
+
+    public function guardarNuevaCredencial(Request $request)
+    {
+        $rules = [
+            'password' => 'required|min:5|confirmed'
+        ];
+
+        $this->validate($request, $rules);
+
+        try 
+        {
+            $usuario = Auth::user();
+            $usuario->password = bcrypt($request->get('password'));
+            $usuario->save();
+
+            return redirect()->route('home')->with(['mensaje' => 'Actualización exitosa']);
+            
+        } 
+        catch (\Exception $ex) 
+        {
+            return redirect()->route('home');        
+        }
     }
 }
