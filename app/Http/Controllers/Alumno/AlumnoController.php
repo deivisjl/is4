@@ -144,7 +144,7 @@ class AlumnoController extends Controller
         ];            
 
         $this->validate($request, $rules);
-
+        
         return DB::transaction(function () use($request, $alumno){
 
             $persona = Persona::findOrfail($alumno->persona_id);

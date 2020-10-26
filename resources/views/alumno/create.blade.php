@@ -67,7 +67,7 @@
                         <select name="genero" id="genero" class="form-control">
                           <option value="0">-- Seleccione una opción --</option>
                           <option value="1">Masculino</option>
-                          <option value="1">Femenino</option>
+                          <option value="2">Femenino</option>
                         </select>
                         @if ($errors->has('genero'))
                           <p class="text-danger">{{ $errors->first('genero') }}</p>

@@ -74,7 +74,7 @@
                         >
                             Masculino
                           </option>
-                        <option value="1"
+                        <option value="2"
                         @if($alumno->persona->genero == 'F')
                           selected="selected"
                         @endif
