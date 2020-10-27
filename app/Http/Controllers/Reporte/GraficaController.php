@@ -141,7 +141,7 @@ class GraficaController extends Controller
             $ciclo = CicloEscolar::where('activo',1)->first();
 
             $registros = DB::table('inscrito as i')
-                            ->join('alumno as a','i.alumno_id','i.id')
+                            ->join('alumno as a','i.alumno_id','a.id')
                             ->join('persona as p','a.persona_id','p.id')
                             ->select(DB::raw('COUNT(p.genero) as genero'),'p.genero as id')
                             ->where('i.ciclo_escolar_id',$ciclo->id)
