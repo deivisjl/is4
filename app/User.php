@@ -12,7 +12,7 @@ class User extends Authenticatable
 
     const ADMINISTRADOR = 'ADMINISTRADOR';
     const PROFESOR = 'PROFESOR';
-    const DIGITADOR = 'DIGITADOR';
+    const DIGITADOR = 'SECRETARIA';
 
     /**
      * The attributes that are mass assignable.
