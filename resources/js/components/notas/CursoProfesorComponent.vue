@@ -70,7 +70,7 @@ export default {
                   window.URL.revokeObjectURL(url);
             })
             .catch((error) => {
-                Toast.error(error,'Mensaje');
+                Toastr.error(error,'Mensaje');
             })
             .finally(()=>{
                 this.loading = false

@@ -63,6 +63,8 @@ Route::group(['middleware' =>['auth','digitador']],function(){
     Route::resource('aulas','Aula\AulaController');
     Route::get('aulas-detalle/{id}','Aula\AulaController@detalleAula');
     Route::get('listar-alumnos-aula/{id}','Aula\AulaController@listarAlumnoAula');
+    Route::get('alumno-nota/{id}/editar','Aula\AulaController@alumnoNotaEditar');
+    Route::post('alumno-nota-actualizar','Aula\AulaController@alumnoNotaActualizar');
     Route::delete('eliminar-inscrito/{id}','Aula\AulaController@eliminarInscrito');
 
     /* Alumno */

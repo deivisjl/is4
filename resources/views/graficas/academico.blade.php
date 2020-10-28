@@ -13,7 +13,7 @@
         </div>
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header">Género de alumnos</div>
+                <div class="card-header">Género de alumnos inscritos</div>
                 <div class="card-body">                    
                     <inscrito-genero-component></inscrito-genero-component>
                 </div>

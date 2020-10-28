@@ -16,4 +16,9 @@ class Nota extends Model
         'nota',
         'ciclo_escolar_id',
     ];
+
+    public function inscrito()
+    {
+        return $this->belongsTo(Inscrito::class);
+    }
 }

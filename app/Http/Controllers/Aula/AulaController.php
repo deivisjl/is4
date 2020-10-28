@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Aula;
 
 use App\Aula;
+use App\Nota;
 use App\Plan;
 use App\Seccion;
 use App\Inscrito;
@@ -250,6 +251,66 @@ class AulaController extends Controller
                     return  response()->json(['error' => 'No se puede eliminar el registro porque está relacionado'],423);
                 }
             }
+            return response()->json(['error' => $ex->getMessage()],423);
+        }
+    }
+    /* Funcion que devuelve las notas ingresadas de un alumno
+       para su posterior modificación */
+    public function alumnoNotaEditar($id)
+    {
+        $ciclo = CicloEscolar::where('activo',1)->first();
+
+        $alumno = Nota::with('inscrito.alumno.persona')
+                    ->where('nota.inscrito_id',$id)
+                    ->first();
+                    
+        $registros = DB::table('nota as n')
+                    ->join('pensum as p','p.id','n.pensum_id')
+                    ->join('curso as c','c.id','p.curso_id')
+                    ->select('c.nombre as curso','n.id','n.pensum_id')
+                    ->where('n.id', $id)
+                    ->where('n.ciclo_escolar_id',$ciclo->id)
+                    ->get();
+
+        $datos = array();
+
+        foreach ($registros as $key => $curso) 
+        {
+            $notas = DB::table('nota as n')
+                        ->join('bimestre as b','n.bimestre_id','b.id')
+                        ->select('n.id','n.nota','b.nombre')
+                        ->where('n.id',$curso->id)
+                        ->get();
+
+            $datos[$key] = (array)$curso;
+            $datos[$key]['notas'] = $notas;
+        }
+        //return response()->json(['data' => $datos]);
+        return view('aula.editar-notas',['datos' => $datos, 'alumno' => $alumno]);
+    }
+    /* Funcion que actualiza el registro de notas luego de determinar
+       que necesitaban modificación */
+    public function alumnoNotaActualizar(Request $request)
+    {
+        try 
+        {
+            $rules = [
+                'id' => 'required',
+                'nota' => 'required|min:1|max:25'
+            ];
+
+            $this->validate($request,$rules);
+            
+            return DB::transaction(function () use($request){
+                $nota = Nota::findOrFail($request->get('id'));
+                $nota->nota = $request->get('nota');
+                $nota->save();
+                
+                return response()->json(['data' => 'Nota actualizada con éxito']);
+            });
+        } 
+        catch (\Exception $ex) 
+        {
             return response()->json(['error' => $ex->getMessage()],423);
         }
     }

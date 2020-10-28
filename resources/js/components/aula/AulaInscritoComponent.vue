@@ -11,6 +11,7 @@
                             <th>Nombres</th>
                             <th>Apellidos</th>
                             <th>Código SIRE</th>
+                            <th style="width: 20%"></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -20,6 +21,7 @@
                             <td>{{ item.nombres }}</td>
                             <td>{{ item.apellidos }}</td>
                             <td>{{ item.sire_id }}</td>
+                            <td><a href="" class="btn-success btn-sm" @click.prevent="editar(item)"><i class="fas fa-edit"></i> Modificar notas</a></td>
                             <td><a href="" class="btn-danger btn-sm" @click.prevent="eliminar(item)"><i class="fas fa-trash"></i> Eliminar</a></td>
                         </tr>
                     </tbody>
@@ -52,6 +54,10 @@ export default {
         this.obtener_alumnos()
     },
     methods:{
+        editar(data)
+        {
+            window.location.href = '/alumno-nota/'+data.id+'/editar'
+        },
         eliminar(data)
         {
 

@@ -58,6 +58,7 @@ Vue.component('aula-detalle-component', require('./components/aula/AulaInscritoC
 
 Vue.component('inscripcion-component', require('./components/inscrito/InscripcionComponent.vue').default);
 Vue.component('curso-profesor-component', require('./components/notas/CursoProfesorComponent.vue').default);
+Vue.component('actualizar-nota-component', require('./components/notas/ActualizarNotaComponent').default);
 
 Vue.component('nota-aula-component', require('./components/reporte/notas/NotaAulaComponent.vue').default);
 
