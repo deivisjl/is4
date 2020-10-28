@@ -9,10 +9,16 @@
             <div class="col-md-6 offset-md-3">
                 <div class="card card-default">
                   <div class="card-header-custom">
-                      <h5 class="float-left">{{ $alumno->inscrito->alumno->persona->primer_nombre }} {{ $alumno->inscrito->alumno->persona->primer_apellido }}</h5>
+                      @if($alumno)
+                        <h5 class="float-left">{{ $alumno->inscrito->alumno->persona->primer_nombre }} {{ $alumno->inscrito->alumno->persona->primer_apellido }}</h5>
+                      @else
+
+                      @endif
                       <ol class="breadcrumb-custom float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                        @if($alumno)
                         <li class="breadcrumb-item"><a href="/aulas-detalle/{{ $alumno->inscrito->aula_id }}">Aula</a></li>
+                        @endif
                         <li class="breadcrumb-item active">Nuevo</li>
                       </ol>
                   </div>

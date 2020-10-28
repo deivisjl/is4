@@ -285,7 +285,7 @@ class AulaController extends Controller
             $datos[$key] = (array)$curso;
             $datos[$key]['notas'] = $notas;
         }
-        //return response()->json(['data' => $datos]);
+        //return response()->json(['data' => $alumno]);
         return view('aula.editar-notas',['datos' => $datos, 'alumno' => $alumno]);
     }
     /* Funcion que actualiza el registro de notas luego de determinar
